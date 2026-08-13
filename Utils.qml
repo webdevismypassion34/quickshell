@@ -1,0 +1,42 @@
+pragma Singleton
+
+import Quickshell
+
+Singleton {
+  function fuzzyCompare(query, target) {
+    [query, target] = [query, target].map(v => v.toLowerCase());
+
+    let [score, qi, mi] = [0, 0, -1];
+
+    [...target].forEach((char, i) => {
+      if (char === query[qi]) {
+        let last = target[i - 1];
+        score += i === mi + 1 ? 5 : 1; // if its in a row theres points added
+        if (i === 0 || last === ' ' || last === '-' || last === '_')
+          score += 3;
+        mi = i;
+        qi++;
+      }
+    });
+
+    return score;
+  }
+
+  readonly property var fuzzySearch: (query, targets, key) => query ? targets.map(v => key ? {
+        target: v[key],
+        item: v
+      } : {
+        target: v,
+        item: v
+      }).map(({
+        target,
+        item
+      }) => ({
+          score: fuzzyCompare(query, target),
+          item
+        })).sort((a, b) => b.score - a.score).map(({
+        item
+      }) => item) : targets
+
+  readonly property var mod: (n, m) => ((n % m) + m) % m
+}
