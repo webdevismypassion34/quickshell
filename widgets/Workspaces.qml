@@ -35,6 +35,7 @@ Item {
       drag.axis: Drag.XAxis
       drag.minimumX: 0
       drag.maximumX: (row.buttonWidth + row.spacing) * (container.workspaces.length - 1)
+      drag.smoothed: true
     }
 
     Connections {
@@ -44,6 +45,7 @@ Item {
         if (!drag.drag.active) {
           const closest = Math.round(active.x / (row.buttonWidth + row.spacing));
           Hyprland.workspaces.values[closest].activate();
+          active.x = (row.buttonWidth + row.spacing) * closest
         }
       }
     }
