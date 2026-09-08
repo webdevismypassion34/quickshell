@@ -1,7 +1,6 @@
 pragma ComponentBehavior: Bound
 
 import Quickshell
-import Quickshell.Hyprland
 import QtQuick
 
 import "widgets"
@@ -55,7 +54,9 @@ Scope {
           spacing: 4
 
           Arch {}
-          Workspaces {}
+          Workspaces {
+            screen: bar.modelData.name
+          }
         }
 
         Player {}

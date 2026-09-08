@@ -1,3 +1,4 @@
 .qmlls.ini
-.qmllint.ini 
+.qmllint.ini
 .vscode
+scripts/.venv

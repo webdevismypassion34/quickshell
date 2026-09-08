@@ -3,10 +3,26 @@
 pragma Singleton
 
 import Quickshell
+import Quickshell.Io
 import QtQuick
 
 Singleton {
+  id: root
+
+  FileView {
+    id: persistentFile
+    path: `${root.configDir}/persistent.json`
+    blockLoading: true
+  }
+
   readonly property string configDir: '/home/alexmn/.config/quickshell'
+  readonly property var persistent: new Proxy(JSON.parse(persistentFile.text()), {
+    set(target, prop, value) {
+      target[prop] = value;
+      persistentFile.setText(JSON.stringify(target, null, 2));
+      return true;
+    }
+  })
 
   /*
 

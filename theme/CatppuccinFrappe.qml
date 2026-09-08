@@ -6,12 +6,15 @@ import QtQuick
 // https://catppuccin.com/palette/
 
 Singleton {
+  readonly property string name: 'CatppuccinFrappe'
+
   readonly property color purple: "#ca9ee6"
   readonly property color red: "#e78284"
   readonly property color orange: "#ef9f76"
   readonly property color yellow: "#e5c890"
   readonly property color green: "#a6d189"
   readonly property color blue: "#8caaee"
+  readonly property color teal: "#81c8be"
   
   readonly property color text: "#c6d0f5"
   readonly property color subtext1: "#b5bfe2"

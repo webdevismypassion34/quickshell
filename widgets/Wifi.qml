@@ -158,7 +158,7 @@ PopupButton {
         if (root.vpnEnabled) {
           root.vpnEnabled = true;
           proc.exec({
-            command: ['python3', 'protonvpn_connect.py', Settings.vpnLocation],
+            command: ['python3', 'scripts/protonvpn_connect.py', Settings.vpnLocation],
             workingDirectory: Settings.configDir
           });
         } else {

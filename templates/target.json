@@ -1,0 +1,19 @@
+{
+  "targets": [
+    {
+      "template": "kitty.conf",
+      "target": "%C/kitty/themes/Quickshell.conf",
+      "posthook": "kitty +kitten themes --reload-in=all Quickshell"
+    },
+    {
+      "template": "vesktop.css",
+      "target": "%C/vesktop/themes/Quickshell.css",
+      "posthook": "true"
+    },
+    {
+      "template": "librewolf.css",
+      "target": "%C/librewolf/librewolf/h7md6foa.default-default/chrome/userChrome.css",
+      "posthook": "/home/alexmn/.config/quickshell/scripts/.venv/bin/python3 /home/alexmn/.config/quickshell/scripts/reload_librewolf_style.py"
+    }
+  ]
+}

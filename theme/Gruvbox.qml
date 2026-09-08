@@ -6,13 +6,16 @@ import QtQuick
 // https://lospec.com/palette-list/gruvbox-dark
 
 Singleton {
+  readonly property string name: 'Gruvbox'
+
   readonly property color purple: "#b16286"
   readonly property color red: "#fb4934"
   readonly property color orange: "#fe8019"
   readonly property color yellow: "#fabd2f"
   readonly property color green: "#b8bb26"
   readonly property color blue: "#458588"
-  
+  readonly property color teal: "#689d6a"
+
   readonly property color text: "#ebdbb2"
   readonly property color subtext1: "#d5c4a1"
   readonly property color subtext0: "#bdae93"

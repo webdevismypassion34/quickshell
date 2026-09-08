@@ -1,8 +1,35 @@
 pragma Singleton
 
+import QtQuick
 import Quickshell
+import Quickshell.Io
 
 Singleton {
+  id: utils
+
+  Component {
+    id: procComponent
+
+    Process {
+      id: proc
+
+      required property var onDone
+
+      stdout: StdioCollector {
+        onStreamFinished: {
+          proc.onDone(text);
+          proc.destroy();
+        }
+      }
+    }
+  }
+
+  function exec(command, callback) {
+    procComponent.createObject(utils, {
+      onDone: callback ?? (() => {})
+    }).exec(command);
+  }
+
   function fuzzyCompare(query, target) {
     [query, target] = [query, target].map(v => v.toLowerCase());
 

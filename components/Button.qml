@@ -14,7 +14,7 @@ Rectangle {
   signal clicked
 
   radius: Theme.rounding
-  color: hovered ? Theme.withOpacity(hoverColor, 0.4) : Theme.withOpacity(accentColor, 0.3)
+  color: hovered ? Theme.withOpacity(hoverColor, 1) : Theme.withOpacity(accentColor, 0.6)
   width: label.implicitWidth + 30
   height: 35
 

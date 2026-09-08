@@ -24,6 +24,8 @@ PopupButton {
   Item {
     id: window
 
+    readonly property int footerHeight: 24
+
     function groupNotifications(n) {
       const groups = {};
 
@@ -40,8 +42,53 @@ PopupButton {
       return Object.entries(groups);
     }
 
-    property var notificationStack: NotificationData.notifications.filter(v => v && v.id !== undefined && !NotificationData.excusedNotifications[v.id])
+    function footerKey(name) {
+      return `footer:${name}`;
+    }
+
     property var openedNotifications: ({})
+
+    readonly property var groupedNotifications: window.groupNotifications(NotificationData.notifications.filter(v => v && v.id !== undefined))
+
+    readonly property var notificationStack: {
+      const entries = [];
+
+      window.groupedNotifications.forEach(([name, notifs]) => {
+        const expanded = !!window.openedNotifications[name];
+        const visible = expanded ? notifs : [notifs[0]];
+
+        visible.forEach(n => {
+          if (n && !NotificationData.excusedNotifications[n.id]) {
+            entries.push({
+              key: n.id,
+              height: NotificationData.notificationHeights[n.id] ?? Theme.notificationHeight
+            });
+          }
+        });
+
+        if (notifs.length > 1) {
+          entries.push({
+            key: window.footerKey(name),
+            height: window.footerHeight
+          });
+        }
+      });
+
+      return entries;
+    }
+
+    readonly property var stackOffsets: {
+      const offsets = {};
+      let total = 0;
+
+      window.notificationStack.forEach(entry => {
+        offsets[entry.key] = total;
+        total += entry.height + 4;
+      });
+
+      offsets.total = total;
+      return offsets;
+    }
 
     width: button.popupWidth
     height: button.popupHeight
@@ -86,16 +133,18 @@ PopupButton {
       Flickable {
         width: button.popupWidth
         height: 1100
-        contentHeight: window.notificationStack.reduce((total, notif) => total + (notif ? (NotificationData.notificationHeights[notif.id] ?? Theme.notificationHeight) : 0) + 4, 0)
+        contentHeight: window.stackOffsets.total ?? 0
         clip: true
 
         Repeater {
           id: groupsRepeater
-          model: window.groupNotifications(NotificationData.notifications.filter(v => v && v.id !== undefined))
+          model: window.groupedNotifications
 
           Item {
             id: group
             required property var modelData
+
+            width: Theme.notificationWidth
 
             Repeater {
               id: repeater
@@ -114,27 +163,18 @@ PopupButton {
                     return;
                   root.width = 0;
                   closedId = modelData.id;
-                  NotificationData.excusedNotifications[modelData.id] = true;
-                  window.notificationStack = NotificationData.notifications.filter(v => v && v.id !== undefined && !NotificationData.excusedNotifications[v.id]);
+                  NotificationData.excusedNotifications = Object.assign({}, NotificationData.excusedNotifications, {
+                    [modelData.id]: true
+                  });
                   closeAnim.running = true;
                 }
 
-                readonly property int newIndex: modelData ? window.notificationStack.findIndex(v => v.id === modelData.id) : -1
-                property int index: 0
-
-                onNewIndexChanged: {
-                  if (newIndex !== -1) {
-                    index = newIndex;
-                  }
-                }
-
-                readonly property var before: window.notificationStack.slice(0, index)
-                readonly property int topMargin: index > -1 ? before.reduce((total, notif) => total + (notif ? (NotificationData.notificationHeights[notif.id] ?? Theme.notificationHeight) : 0) + 4, 0) : -height
+                readonly property int topMargin: modelData ? (window.stackOffsets[modelData.id] ?? -height) : -height
 
                 anchors {
-                  top: parent.top
+                  top: group.top
                   topMargin: topMargin + Theme.notificationInnerMargin
-                  left: parent.left
+                  left: group.left
                 }
 
                 Behavior on anchors.topMargin {
@@ -155,8 +195,8 @@ PopupButton {
                   if (!modelData || NotificationData.excusedNotifications[modelData.id]) {
                     shown = false;
                   } else {
-                    root.width = Theme.notificationWidth;
                     shown = true;
+                    root.width = Theme.notificationWidth;
                   }
                 }
 
@@ -174,20 +214,27 @@ PopupButton {
                     root.shown = false;
                     if (root.closedId != null) {
                       NotificationData.notifications = NotificationData.notifications.filter(v => v && v.id !== root.closedId);
-                      delete NotificationData.excusedNotifications[root.closedId];
-                      delete NotificationData.notificationHeights[root.closedId];
+
+                      const nextExcused = Object.assign({}, NotificationData.excusedNotifications);
+                      delete nextExcused[root.closedId];
+                      NotificationData.excusedNotifications = nextExcused;
+
+                      const nextHeights = Object.assign({}, NotificationData.notificationHeights);
+                      delete nextHeights[root.closedId];
+                      NotificationData.notificationHeights = nextHeights;
                     }
                   }
                   running: false
                 }
 
-                width: Theme.notificationWidth
+                width: 0
                 height: Theme.notificationHeight + body.implicitHeight - Theme.fontSize
                 onHeightChanged: {
                   if (!modelData)
                     return;
-                  NotificationData.notificationHeights[modelData.id] = height;
-                  window.notificationStack = NotificationData.notifications.filter(v => v && v.id !== undefined && !NotificationData.excusedNotifications[v.id]);
+                  NotificationData.notificationHeights = Object.assign({}, NotificationData.notificationHeights, {
+                    [modelData.id]: height
+                  });
                 }
                 radius: Theme.rounding
                 color: Theme.withOpacity(Theme.bg, 0.3)
@@ -258,28 +305,45 @@ PopupButton {
               }
             }
 
-            Label {
-              text: window.openedNotifications[group.modelData[0]] ? 'collapse' : `expand (+${group.modelData[1].length - 1})`
-              visible: group.modelData[1].length > 1
+            Item {
+              id: footer
 
-              ClickArea {
-                onClicked: {
-                  const name = group.modelData[0];
-                  const next = Object.assign({}, window.openedNotifications);
-                  next[name] = !next[name];
-                  window.openedNotifications = next;
+              visible: group.modelData[1].length > 1
+              height: window.footerHeight
+
+              anchors {
+                top: group.top
+                topMargin: (window.stackOffsets[window.footerKey(group.modelData[0])] ?? 0) + Theme.notificationInnerMargin
+                left: group.left
+                right: group.right
+              }
+
+              Behavior on anchors.topMargin {
+                NumberAnim {}
+              }
+
+              Label {
+                text: window.openedNotifications[group.modelData[0]] ? 'collapse' : `expand (+${group.modelData[1].length - 1})`
+                anchors.left: parent.left
+
+                ClickArea {
+                  onClicked: {
+                    const name = group.modelData[0];
+                    const next = Object.assign({}, window.openedNotifications);
+                    next[name] = !next[name];
+                    window.openedNotifications = next;
+                  }
                 }
               }
-            }
 
-            Label {
-              text: `close`
-              visible: group.modelData[1].length > 1
-              x: 300
+              Label {
+                text: `close`
+                anchors.right: parent.right
 
-              ClickArea {
-                onClicked: {
-                  NotificationData.notifications = NotificationData.notifications.filter(v => v.appName !== group.modelData[0]);
+                ClickArea {
+                  onClicked: {
+                    NotificationData.notifications = NotificationData.notifications.filter(v => v.appName !== group.modelData[0]);
+                  }
                 }
               }
             }

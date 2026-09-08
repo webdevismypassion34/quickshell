@@ -14,7 +14,7 @@ Rectangle {
 
   radius: Theme.rounding
   color: Theme.withOpacity(accentColor, 0.3)
-  border.color: input.activeFocus ? Theme.blue : Theme.border
+  border.color: input.activeFocus ? Theme.accent : Theme.border
   border.width: 1
   width: 200
   height: 35
@@ -55,5 +55,6 @@ Rectangle {
     clip: true
 
     onAccepted: root.accepted()
+    onActiveFocusChanged: if (!activeFocus) deselect()
   }
 }

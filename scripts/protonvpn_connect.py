@@ -1,14 +1,3 @@
-"""
-Ok so basically when you try to connect to a specific city via
-the Proton VPN cli, it says I can't do it because I don't have
-a paid-tier subscription. However, I can connect to a specific
-city in the GTK app. It was just blocked at the software-level
-which meant there is a way to connect to a specific city which
-turned out to be this.
-
-Usage: python3 protonvpn_connect.py <city>
-"""
-
 import asyncio
 import sys
 

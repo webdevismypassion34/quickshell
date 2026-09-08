@@ -2,8 +2,6 @@ import QtQuick
 import Quickshell
 import Quickshell.Wayland
 import ".."
-import "../components"
-import "../animations"
 
 Scope {
   id: root

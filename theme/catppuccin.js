@@ -6,7 +6,6 @@ document.querySelectorAll('.flavor').forEach(flavor => {
     'Rosewater',
     'Flamingo',
     'Maroon',
-    'Teal',
     'Sky',
     'Sapphire',
     'Lavender',

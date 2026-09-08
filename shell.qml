@@ -4,8 +4,10 @@ import Quickshell
 import Quickshell.Hyprland
 import Quickshell.Io
 import "features"
+import "settings"
 
 Scope {
+  // ipc handlers
   IpcHandler {
     target: "notifications"
 
@@ -34,6 +36,15 @@ Scope {
     }
   }
 
+  IpcHandler {
+    target: 'settings'
+
+    function open(): void {
+      settings.open()
+    }
+  }
+
+  // contents
   Notifications {}
   Bar {
     id: bar
@@ -49,5 +60,9 @@ Scope {
     active: Popups.openPopup !== null
     windows: Popups.openPopup ? [bar, Popups.openPopup.popupWindow] : [bar]
     onCleared: Popups.close()
+  }
+
+  App {
+    id: settings
   }
 }

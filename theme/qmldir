@@ -3,3 +3,7 @@ singleton CatppuccinFrappe 1.0 CatppuccinFrappe.qml
 singleton CatppuccinMacchiato 1.0 CatppuccinMacchiato.qml
 singleton CatppuccinMocha 1.0 CatppuccinMocha.qml
 singleton Gruvbox 1.0 Gruvbox.qml
+singleton Nord 1.0 Nord.qml
+singleton Dracula 1.0 Dracula.qml
+singleton TokyoNight 1.0 TokyoNight.qml
+singleton RosePine 1.0 RosePine.qml

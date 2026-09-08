@@ -2,12 +2,19 @@
 
 pragma Singleton
 
+// qmllint disable unused-imports eval
+
 import Quickshell
+import Quickshell.Io
 import QtQuick
-import "theme"
+import "theme" // would say unused import because it's used via `eval`
+import "."
 
 Singleton {
-  readonly property var selectedTheme: CatppuccinMocha
+  id: root
+
+  // this is safe because unless the user manually modifies persistent.json, it can't have anything bad
+  property var selectedTheme: eval(Settings.persistent.currentTheme)
 
   // colors
   readonly property color darkbg: selectedTheme.mantle
@@ -29,7 +36,7 @@ Singleton {
   readonly property color green: selectedTheme.green
   readonly property color blue: selectedTheme.blue
 
-  readonly property color accent: purple
+  property color accent: selectedTheme[Settings.persistent.currentAccent]
 
   // colors - do not change these
   readonly property color transparent: '#00000000'
@@ -55,5 +62,45 @@ Singleton {
   // functions
   function withOpacity(color, alpha) {
     return Qt.rgba(color.r, color.g, color.b, alpha);
+  }
+
+  FileView {
+    id: targetsFile
+    path: `${Settings.configDir}/templates/target.json`
+    blockLoading: true
+  }
+
+  FileView {
+    id: writeFile
+    blockLoading: true
+  }
+
+  function changeGlobalTheme(theme) {
+    Settings.persistent.currentTheme = selectedTheme.name;
+    Settings.persistent.currentAccent = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple',].find(v => selectedTheme[v] === Theme.accent);
+
+    const targets = JSON.parse(targetsFile.text());
+    targets.targets.forEach(t => {
+      const {
+        template,
+        target,
+        posthook
+      } = t;
+
+      Utils.exec({
+        command: ['cat', template],
+        workingDirectory: Settings.configDir + '/templates'
+      }, stdout => {
+        const content = stdout.replace(/\$\{(\w+)\}|\$(\w+)/g, (match, braced, bare) => {
+          const name = braced ?? bare;
+          return root[name] ?? selectedTheme[name] ?? match;
+        });
+        const targetFile = target.replace('%C', '/home/alexmn/.config');
+
+        Utils.exec({
+          command: ['sh', '-c', `: > ${targetFile} && printf '%s' '${content.replace(/'/g, "'\\''")}' > ${targetFile} && ${posthook}`]
+        });
+      });
+    });
   }
 }

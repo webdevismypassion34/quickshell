@@ -12,7 +12,9 @@ Item {
   implicitWidth: row.implicitWidth
   implicitHeight: row.implicitHeight
 
-  readonly property var workspaces: Hyprland.workspaces.values.filter(v => isFinite(v.name))
+  required property string screen;
+
+  readonly property var workspaces: Hyprland.workspaces.values.filter(v => isFinite(v.name)).filter(v => v.monitor.name === screen)
 
   Rectangle {
     id: active
@@ -21,7 +23,7 @@ Item {
     height: 35
     radius: Theme.rounding
     color: Theme.withOpacity(Theme.overlay1, 0.1)
-    x: (row.buttonWidth + row.spacing) * container.workspaces.findIndex(v => v.focused)
+    x: (row.buttonWidth + row.spacing) * container.workspaces.findIndex(v => v.active)
 
     Behavior on x {
       NumberAnim {}

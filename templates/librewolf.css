@@ -1,0 +1,166 @@
+:root,
+menupopup,
+panel,
+tooltip,
+.tab-label,
+#urlbar,
+#urlbar-input,
+#searchbar,
+toolbar,
+toolbarbutton,
+.toolbarbutton-text,
+findbar {
+  font-family: "JetBrainsMono Nerd Font Propo" !important;
+}
+
+:root {
+  --lwt-accent-color: $bg !important;
+  --lwt-accent-color-inactive: $bg !important;
+  --lwt-text-color: $fg !important;
+
+  --toolbar-bgcolor: $bg !important;
+  --toolbar-color: $fg !important;
+  --toolbar-field-background-color: $surface0 !important;
+  --toolbar-field-color: $fg !important;
+  --toolbar-field-border-color: $surface1 !important;
+  --toolbar-field-focus-background-color: $surface0 !important;
+  --toolbar-field-focus-color: $fg !important;
+  --toolbar-field-focus-border-color: $accent !important;
+
+  --tab-selected-bgcolor: $surface0 !important;
+  --tab-text-color: $fg !important;
+  --tabpanel-background-color: $bg !important;
+
+  --arrowpanel-background: $darkbg !important;
+  --arrowpanel-color: $fg !important;
+  --arrowpanel-border-color: $surface0 !important;
+
+  --autocomplete-popup-background: $darkbg !important;
+  --autocomplete-popup-color: $fg !important;
+  --autocomplete-popup-highlight-background: $accent !important;
+  --autocomplete-popup-highlight-color: $bg !important;
+
+  --panel-separator-color: $surface0 !important;
+  --button-bgcolor: $surface0 !important;
+  --button-color: $fg !important;
+  --button-hover-bgcolor: $surface1 !important;
+  --focus-outline-color: $accent !important;
+
+  --lwt-toolbar-field-focus-border-color: $accent !important;
+}
+
+/* Toolbars, tab strip, titlebar */
+#TabsToolbar,
+#nav-bar,
+#PersonalToolbar,
+#titlebar,
+#navigator-toolbox {
+  background-color: $bg !important;
+  border-color: $surface0 !important;
+}
+
+.tab-background {
+  background-color: transparent !important;
+}
+
+#tabbrowser-tabs .tabbrowser-tab[selected] .tab-background {
+  background-color: $surface0 !important;
+  border-radius: 6px !important;
+}
+
+#tabbrowser-tabs .tabbrowser-tab:not([selected]):hover .tab-background {
+  background-color: $surface0 !important;
+}
+
+.tab-label {
+  color: $fg !important;
+}
+
+/* URL bar / search bar — background lives only on #urlbar-background
+   (the actual rounded pill); leaving it on #urlbar too draws a square
+   box behind the rounded shape */
+#urlbar,
+#searchbar {
+  color: $fg !important;
+}
+
+#urlbar-background {
+  background-color: $surface0 !important;
+  border: 1px solid $surface1 !important;
+}
+
+#urlbar[focused] > #urlbar-background,
+#searchbar:focus-within {
+  border-color: $accent !important;
+  box-shadow: none !important;
+}
+
+.urlbarView-row[selected],
+.autocomplete-richlistitem[selected] {
+  background-color: $surface1 !important;
+  color: $fg !important;
+}
+
+.urlbarView-row:hover {
+  background-color: $surface0 !important;
+}
+
+/* Menus, panels, doorhangers, context menus */
+menupopup,
+panel {
+  background-color: $darkbg !important;
+  color: $fg !important;
+  border: 1px solid $surface0 !important;
+}
+
+menuitem,
+menu {
+  color: $fg !important;
+}
+
+menuitem:hover,
+menu:hover,
+.subviewbutton:hover,
+toolbarbutton:hover {
+  background-color: $surface0 !important;
+  color: $fg !important;
+}
+
+menuseparator {
+  border-color: $surface0 !important;
+}
+
+/* Sidebar */
+#sidebar-box,
+#sidebar,
+#sidebar-header {
+  background-color: $darkbg !important;
+  color: $fg !important;
+  border-color: $surface0 !important;
+}
+
+/* Find bar */
+findbar {
+  background-color: $darkbg !important;
+  color: $fg !important;
+}
+
+findbar .found {
+  background-color: $green !important;
+  color: $bg !important;
+}
+
+findbar .findbar-not-found {
+  background-color: $red !important;
+  color: $bg !important;
+}
+
+/* Scrollbars in the browser chrome */
+* {
+  scrollbar-color: $surface2 $bg;
+}
+
+/* Bookmark toolbar items */
+toolbarbutton {
+  color: $fg !important;
+}
