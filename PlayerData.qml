@@ -10,6 +10,7 @@ Singleton {
 
   readonly property var player: Mpris.players.values.filter(v => v.dbusName === Settings.player)[0]
   readonly property bool isPlaying: (root.player?.playbackState === MprisPlaybackState.Playing) ?? false
+  readonly property string lyricsCacheDir: '/home/alexmn/.cache/quickshell/lyrics'
 
   property string lastTrack: ''
   property var lyrics: ({
@@ -33,37 +34,51 @@ Singleton {
         lyrics: []
       };
 
-      const xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = () => {
-        if (xhr.readyState !== XMLHttpRequest.DONE)
-          return;
+      const cachePath = `${root.lyricsCacheDir}/${Utils.hash(id)}.json`;
 
+      Utils.readFile(cachePath, text => {
         if (root.lastTrack !== id)
           return;
 
-        if (xhr.status !== 200) {
+        if (text) {
+          root.lyrics = JSON.parse(text);
           return;
         }
 
-        const data = JSON.parse(xhr.responseText);
+        const xhr = new XMLHttpRequest();
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState !== XMLHttpRequest.DONE)
+            return;
 
-        if (!data.syncedLyrics) {
-          return;
-        }
+          if (root.lastTrack !== id)
+            return;
 
-        let lyrics = data.syncedLyrics.split('\n').map(line => {
-          const [, mm, ss, cs, words] = line.match(/\[(..):(..)\.(..)\] ?(.*)/);
-          const time = (+mm) * 60 + (+ss) + (+cs) / 100;
-          return [time, words];
-        });
+          if (xhr.status !== 200) {
+            return;
+          }
 
-        root.lyrics = {
-          available: !!data.syncedLyrics,
-          lyrics: lyrics
+          const data = JSON.parse(xhr.responseText);
+
+          if (!data.syncedLyrics) {
+            return;
+          }
+
+          let lyrics = data.syncedLyrics.split('\n').map(line => {
+            const [, mm, ss, cs, words] = line.match(/\[(..):(..)\.(..)\] ?(.*)/);
+            const time = (+mm) * 60 + (+ss) + (+cs) / 100;
+            return [time, words];
+          });
+
+          root.lyrics = {
+            available: !!data.syncedLyrics,
+            lyrics: lyrics
+          };
+
+          Utils.writeFile(cachePath, JSON.stringify(root.lyrics));
         };
-      };
-      xhr.open('GET', `https://lrclib.net/api/get?track_name=${encodeURIComponent(player.trackTitle)}&artist_name=${encodeURIComponent(player.trackArtist)}`);
-      xhr.send();
+        xhr.open('GET', `https://lrclib.net/api/get?track_name=${encodeURIComponent(player.trackTitle)}&artist_name=${encodeURIComponent(player.trackArtist)}`);
+        xhr.send();
+      });
     }
   }
 }

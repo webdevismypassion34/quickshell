@@ -30,6 +30,16 @@ Singleton {
     }).exec(command);
   }
 
+  function readFile(path, callback) {
+    exec(['cat', path], callback);
+  }
+
+  function writeFile(path, content) {
+    exec(['sh', '-c', 'mkdir -p "$(dirname "$1")" && printf %s "$2" > "$1"', 'sh', path, content]);
+  }
+
+  readonly property var hash: str => [...str].reduce((h, c) => (Math.imul(31, h) + c.charCodeAt(0)) | 0, 0).toString(36)
+
   function fuzzyCompare(query, target) {
     [query, target] = [query, target].map(v => v.toLowerCase());
 
