@@ -6,7 +6,10 @@ import QtQuick
 import "widgets"
 
 Scope {
+  property alias windows: variants.instances
+
   Variants {
+    id: variants
     model: Quickshell.screens
 
     // qmllint disable uncreatable-type

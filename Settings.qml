@@ -53,7 +53,7 @@ Singleton {
     {
       type: 'button',
       label: 'system settings',
-      action: 'run:notify-send quickshell "this feature is incomplete"'
+      action: 'run:qs ipc call settings open'
     },
     {
       type: 'sep'

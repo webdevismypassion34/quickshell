@@ -58,7 +58,7 @@ Scope {
 
   HyprlandFocusGrab {
     active: Popups.openPopup !== null
-    windows: Popups.openPopup ? [bar, Popups.openPopup.popupWindow] : [bar]
+    windows: Popups.openPopup ? [...bar.windows, Popups.openPopup.popupWindow ?? Popups.openPopup] : [...bar.windows]
     onCleared: Popups.close()
   }
 

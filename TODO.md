@@ -1,0 +1,10 @@
+- lyric caching
+  - look into lrcget
+- clock, vol popup
+  - clock: dashboard
+  - vol: sliders, app(s) using mic
+- finish battery popup
+- finish rest of settings, including:
+  - monitors: drawing of monitors
+  - status bar: drag and drop, right click an item for its settings
+  - notifications: app-specific rules

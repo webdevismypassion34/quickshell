@@ -15,6 +15,7 @@ Item {
   property bool hor: true // animate that dimension
   property int verAlign: 0 // which way to align (0: left, 1: center, 2: right)
   property int horAlign: 1 // which way to align (0: left, 1: center, 2: right)
+  property bool drawBorder: true
 
   // internal - should never be changed from outside this file, but can be viewed
   property int topMargin: 10
@@ -101,8 +102,8 @@ Item {
         height: root.popupHeight - root.topMargin
         radius: Theme.rounding
         border.color: Theme.border
-        border.width: 1
-        color: Theme.withOpacity(root.popupColor, 0.9)
+        border.width: +root.drawBorder
+        color: root.popupColor === Theme.transparent ? root.popupColor : Theme.withOpacity(root.popupColor, 0.9)
       }
     }
   }
