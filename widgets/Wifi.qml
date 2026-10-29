@@ -10,8 +10,7 @@ import "../animations"
 PopupButton {
   id: root
 
-  readonly property bool censorWifiNames: false // gonna make this enable when taking videos and screenshots
-  readonly property var computeWifiName: ssid => (censorWifiNames && ssid && ssid.length > 2) ? `${ssid[0]}${'*'.repeat(ssid.length - 2)}${ssid[ssid.length - 1]}` : ssid
+  readonly property var computeWifiName: ssid => (Settings.censorWifiNames && ssid && ssid.length > 2) ? `${ssid[0]}${'*'.repeat(ssid.length - 2)}${ssid[ssid.length - 1]}` : ssid
 
   function getIcon(connectedWifi) {
     if (connectedWifi)
@@ -28,6 +27,7 @@ PopupButton {
   property bool vpnEnabled: false
   property bool vpnLoading: false
   property string vpnLabel: 'Disconnected'
+  property string vpnLocation: Settings.persistent.vpnLocation
 
   FileView {
     id: proton
@@ -158,7 +158,7 @@ PopupButton {
         if (root.vpnEnabled) {
           root.vpnEnabled = true;
           proc.exec({
-            command: ['python3', 'scripts/protonvpn_connect.py', Settings.vpnLocation],
+            command: ['python3', 'scripts/protonvpn_connect.py', root.vpnLocation],
             workingDirectory: Settings.configDir
           });
         } else {
@@ -472,7 +472,7 @@ PopupButton {
       }
 
       Label {
-        text: `Locations (selected: ${Settings.vpnLocation})`
+        text: `Locations (selected: ${root.vpnLocation})`
         anchors {
           top: parent.top
           left: parent.left
@@ -514,7 +514,8 @@ PopupButton {
               ClickArea {
                 id: countryArea
                 onClicked: {
-                  Settings.vpnLocation = country.modelData[0];
+                  root.vpnLocation = country.modelData[0];
+                  Settings.persistent.vpnLocation = country.modelData[0];
                 }
               }
 
@@ -535,7 +536,7 @@ PopupButton {
               Label {
                 text: '󰸞'
                 font.pixelSize: Theme.fontSize * 2
-                visible: Settings.vpnLocation === country.modelData[0]
+                visible: root.vpnLocation === country.modelData[0]
 
                 anchors {
                   top: parent.top

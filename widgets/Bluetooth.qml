@@ -40,7 +40,7 @@ PopupButton {
   Toggle {
     onToggled: checked => Bluetooth.defaultAdapter.enabled = checked
     accentColor: root.accentColor
-    checked: true
+    checked: Bluetooth.defaultAdapter?.enabled ?? false
 
     anchors {
       top: parent.top

@@ -10,7 +10,7 @@ Singleton {
 
   readonly property var player: Mpris.players.values.filter(v => v.dbusName === Settings.player)[0]
   readonly property bool isPlaying: (root.player?.playbackState === MprisPlaybackState.Playing) ?? false
-  readonly property string lyricsCacheDir: '/home/alexmn/.cache/quickshell/lyrics'
+  readonly property string lyricsCacheDir: `${Quickshell.env("XDG_CACHE_HOME")}/quickshell/lyrics`
 
   property string lastTrack: ''
   property var lyrics: ({

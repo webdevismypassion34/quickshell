@@ -43,9 +43,9 @@ Singleton {
   readonly property color arch: "#1793d1"
 
   // pixel measurements (excluding font)
-  readonly property int barHeight: 50
-  readonly property int outsideMargin: 4
-  readonly property int rounding: 5
+  property int barHeight: 50
+  property int outsideMargin: Settings.persistent.outsideMargin
+  property int rounding: Settings.persistent.rounding
   readonly property int notificationWidth: 350
   readonly property int notificationHeight: 60
   readonly property int notificationInnerMargin: 10
@@ -64,6 +64,10 @@ Singleton {
     return Qt.rgba(color.r, color.g, color.b, alpha);
   }
 
+  // only for templates
+  readonly property int insideMargin: Math.round(outsideMargin / 2)
+  property int power: 2
+
   FileView {
     id: targetsFile
     path: `${Settings.configDir}/templates/target.json`
@@ -78,6 +82,8 @@ Singleton {
   function changeGlobalTheme(theme) {
     Settings.persistent.currentTheme = selectedTheme.name;
     Settings.persistent.currentAccent = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple',].find(v => selectedTheme[v] === Theme.accent);
+    Settings.persistent.rounding = root.rounding;
+    Settings.persistent.outsideMargin = root.outsideMargin;
 
     const targets = JSON.parse(targetsFile.text());
     targets.targets.forEach(t => {
@@ -91,14 +97,25 @@ Singleton {
         command: ['cat', template],
         workingDirectory: Settings.configDir + '/templates'
       }, stdout => {
-        const content = stdout.replace(/\$\{(\w+)\}|\$(\w+)/g, (match, braced, bare) => {
-          const name = braced ?? bare;
-          return root[name] ?? selectedTheme[name] ?? match;
+        const content = stdout.replace(/\$\{([\w:]+)\}|\$(\w+)/g, (match, braced, bare) => {
+          let name = braced ?? bare;
+          let flags = [];
+          if (name.includes(':'))
+            [name, ...flags] = name.split(':');
+
+          let value = root[name] ?? selectedTheme[name] ?? null;
+          if (value === null)
+            return match;
+
+          if (flags.includes('nohash'))
+            value = String(value).replace('#', '');
+
+          return value;
         });
-        const targetFile = target.replace('%C', '/home/alexmn/.config');
+        const targetFile = target.replace('%C', Quickshell.env("XDG_CONFIG_HOME"));
 
         Utils.exec({
-          command: ['sh', '-c', `: > ${targetFile} && printf '%s' '${content.replace(/'/g, "'\\''")}' > ${targetFile} && ${posthook}`]
+          command: ['sh', '-c', `mkdir -p "$(dirname '${targetFile}')" && printf '%s' '${content.replace(/'/g, "'\\''")}' > ${targetFile} && ${posthook}`]
         });
       });
     });

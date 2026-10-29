@@ -1,0 +1,29 @@
+:root {
+  --qs-bg: ${bg};
+  --qs-darkbg: ${darkbg};
+  --qs-fg: ${fg};
+  --qs-border: ${border};
+  --qs-surface-0: ${surface0};
+  --qs-surface-1: ${surface1};
+  --qs-surface-2: ${surface2};
+  --qs-overlay-0: ${overlay0};
+  --qs-overlay-1: ${overlay1};
+  --qs-overlay-2: ${overlay2};
+  --qs-subtext-0: ${subtext0};
+  --qs-subtext-1: ${subtext1};
+  --qs-purple: ${purple};
+  --qs-red: ${red};
+  --qs-orange: ${orange};
+  --qs-yellow: ${yellow};
+  --qs-green: ${green};
+  --qs-blue: ${blue};
+  --qs-accent: ${accent};
+
+  --qs-rounding: ${rounding}px;
+  --qs-outside-margin: ${outsideMargin}px;
+  --qs-inside-margin: ${insideMargin}px;
+
+  --qs-font-family: "${fontFamily}";
+  --qs-font-size: ${fontSize}px;
+  --qs-font-weight: ${fontType};
+}

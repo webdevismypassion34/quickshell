@@ -12,7 +12,7 @@ Item {
   implicitWidth: row.implicitWidth
   implicitHeight: row.implicitHeight
 
-  required property string screen;
+  required property string screen
 
   readonly property var workspaces: Hyprland.workspaces.values.filter(v => isFinite(v.name)).filter(v => v.monitor.name === screen)
 
@@ -45,9 +45,9 @@ Item {
 
       function onActiveChanged() {
         if (!drag.drag.active) {
-          const closest = Math.round(active.x / (row.buttonWidth + row.spacing));
-          Hyprland.workspaces.values[closest].activate();
-          active.x = (row.buttonWidth + row.spacing) * closest
+          const pos = Math.round(active.x / (row.buttonWidth + row.spacing));
+          container.workspaces[pos].activate();
+          active.x = (row.buttonWidth + row.spacing) * pos;
         }
       }
     }

@@ -1,3 +1,5 @@
+pragma ComponentBehavior: Bound
+
 import QtQuick
 import Quickshell
 import Quickshell.Wayland
@@ -10,10 +12,12 @@ Scope {
 
   function open() {
     root.active = true;
+    Settings.censorWifiNames = true
   }
 
   function close() {
     root.active = false;
+    Settings.censorWifiNames = false
   }
 
   Variants {

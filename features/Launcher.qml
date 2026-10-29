@@ -82,11 +82,16 @@ PanelWindow {
     anchors.horizontalCenter: parent.horizontalCenter
     height: 407
     width: popupWindow.popupOpen ? 350 : 0
+    opacity: popupWindow.popupOpen ? 1 : 0
     clip: true
     color: Theme.transparent
     radius: Theme.rounding
 
     Behavior on width {
+      NumberAnim {}
+    }
+
+    Behavior on opacity {
       NumberAnim {}
     }
 
@@ -149,21 +154,20 @@ PanelWindow {
         anchors.horizontalCenter: parent.horizontalCenter
 
         Repeater {
-          model: DesktopEntries.applications
+          model: popupWindow.desktopEntries
 
           Rectangle {
             id: entry
-            // visible: modelData.name.toLowerCase().includes(searchInput.text.toLowerCase())
 
             required property DesktopEntry modelData
-            readonly property int index: popupWindow.desktopEntries.findIndex(v => v.name === modelData.name)
+            required property int index
 
             width: content.width
             height: 35
             color: Theme.withOpacity(Theme.surface0, 0.3)
             radius: Theme.rounding
             clip: true
-            y: Math.min((index > -1 ? index : 999) * 37, popupWindow.height - scroll.y)
+            y: entry.index * 37
 
             Behavior on y {
               NumberAnim {}

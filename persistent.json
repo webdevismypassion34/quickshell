@@ -1,5 +1,7 @@
 {
   "currentTheme": "CatppuccinMocha",
-  "value": "key",
-  "currentAccent": "purple"
+  "currentAccent": "purple",
+  "vpnLocation": "Tokyo",
+  "rounding": 5,
+  "outsideMargin": 4
 }

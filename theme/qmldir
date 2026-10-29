@@ -7,3 +7,6 @@ singleton Nord 1.0 Nord.qml
 singleton Dracula 1.0 Dracula.qml
 singleton TokyoNight 1.0 TokyoNight.qml
 singleton RosePine 1.0 RosePine.qml
+singleton SolarizedDark 1.0 SolarizedDark.qml
+singleton SolarizedLight 1.0 SolarizedLight.qml
+singleton GruvboxLight 1.0 GruvboxLight.qml

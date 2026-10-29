@@ -13,7 +13,17 @@
     {
       "template": "librewolf.css",
       "target": "%C/librewolf/librewolf/h7md6foa.default-default/chrome/userChrome.css",
-      "posthook": "/home/alexmn/.config/quickshell/scripts/.venv/bin/python3 /home/alexmn/.config/quickshell/scripts/reload_librewolf_style.py"
+      "posthook": "true"
+    },
+    {
+      "template": "hyprland.lua",
+      "target": "%C/hypr/modules/quickshell.lua",
+      "posthook": "hyprctl reload"
+    },
+    {
+      "template": "userstyle.css",
+      "target": "%C/librewolf/librewolf/h7md6foa.default-default/chrome/userContent.css",
+      "posthook": "true"
     }
   ]
 }

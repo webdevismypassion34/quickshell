@@ -15,7 +15,7 @@ Singleton {
     blockLoading: true
   }
 
-  readonly property string configDir: '/home/alexmn/.config/quickshell'
+  readonly property string configDir: `${Quickshell.env("XDG_CONFIG_HOME")}/quickshell`
   readonly property var persistent: new Proxy(JSON.parse(persistentFile.text()), {
     set(target, prop, value) {
       target[prop] = value;
@@ -23,6 +23,12 @@ Singleton {
       return true;
     }
   })
+
+  readonly property string wallpaperDir: `${Quickshell.env("HOME")}/wallpaper`
+
+  property bool censorWifiNames: false
+
+  property string statusBarSide: 'top'
 
   /*
 

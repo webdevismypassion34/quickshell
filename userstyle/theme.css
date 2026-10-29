@@ -1,0 +1,29 @@
+:root {
+  --qs-bg: #1e1e2e;
+  --qs-darkbg: #181825;
+  --qs-fg: #cdd6f4;
+  --qs-border: #11111b;
+  --qs-surface-0: #313244;
+  --qs-surface-1: #45475a;
+  --qs-surface-2: #585b70;
+  --qs-overlay-0: #6c7086;
+  --qs-overlay-1: #7f849c;
+  --qs-overlay-2: #9399b2;
+  --qs-subtext-0: #a6adc8;
+  --qs-subtext-1: #bac2de;
+  --qs-purple: #cba6f7;
+  --qs-red: #f38ba8;
+  --qs-orange: #fab387;
+  --qs-yellow: #f9e2af;
+  --qs-green: #a6e3a1;
+  --qs-blue: #89b4fa;
+  --qs-accent: #cba6f7;
+
+  --qs-rounding: 5px;
+  --qs-outside-margin: 4px;
+  --qs-inside-margin: 2px;
+
+  --qs-font-family: "JetBrainsMono Nerd Font Propo";
+  --qs-font-size: 14px;
+  --qs-font-weight: 700;
+}

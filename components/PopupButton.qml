@@ -23,6 +23,13 @@ Rectangle {
   property bool hovered: false
   property int topMargin: 10
   readonly property bool popupOpen: Popups.openPopup === root
+  readonly property bool horizontalBar: Settings.statusBarSide === 'top' || Settings.statusBarSide === 'bottom'
+  readonly property int popupEdge: ({
+      top: Edges.Bottom,
+      bottom: Edges.Top,
+      left: Edges.Right,
+      right: Edges.Left
+    })[Settings.statusBarSide]
 
   default property alias popupContent: contentRect.data
   property alias popupWindow: popupWindow
@@ -67,11 +74,13 @@ Rectangle {
     visible: root.popupOpen || closeTimer.running
     color: Theme.transparent
     anchor.item: root
-    anchor.edges: Edges.Bottom
-    anchor.gravity: Edges.Bottom
-    anchor.adjustment: PopupAdjustment.SlideX
-    anchor.margins.left: Theme.outsideMargin
-    anchor.margins.right: Theme.outsideMargin
+    anchor.edges: root.popupEdge
+    anchor.gravity: root.popupEdge
+    anchor.adjustment: root.horizontalBar ? PopupAdjustment.SlideX : PopupAdjustment.SlideY
+    anchor.margins.left: root.horizontalBar ? Theme.outsideMargin : 0
+    anchor.margins.right: root.horizontalBar ? Theme.outsideMargin : 0
+    anchor.margins.top: root.horizontalBar ? 0 : Theme.outsideMargin
+    anchor.margins.bottom: root.horizontalBar ? 0 : Theme.outsideMargin
     implicitWidth: root.popupWidth
     implicitHeight: root.popupHeight
 

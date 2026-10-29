@@ -36,6 +36,9 @@ Column {
         // qmllint enable eval
 
         Theme.accent = Theme.selectedTheme[accentSelect.displayText.toLowerCase()];
+        Theme.rounding = +(radiusInput.text);
+        Theme.power = +(powerInput.text)
+        Theme.outsideMargin = +(marginInput.text);
 
         Theme.changeGlobalTheme();
       }
@@ -104,12 +107,53 @@ Column {
 
       Label {
         anchors.verticalCenter: parent.verticalCenter
-        text: 'Border Radius:'
+        text: 'Rounding:'
       }
 
       NumberInput {
+        id: radiusInput
+        text: Theme.rounding
         placeholder: '#'
-        width: 50
+        max: 99
+        min: 0
+      }
+    }
+    
+    Row {
+      id: power
+
+      spacing: 5
+
+      Label {
+        anchors.verticalCenter: parent.verticalCenter
+        text: 'Power:'
+      }
+
+      NumberInput {
+        id: powerInput
+        text: Theme.power
+        placeholder: '#'
+        max: 5
+        min: 1
+      }
+    }
+
+    Row {
+      id: margin
+
+      spacing: 5
+
+      Label {
+        anchors.verticalCenter: parent.verticalCenter
+        text: 'Margin:'
+      }
+
+      NumberInput {
+        id: marginInput
+        text: Theme.outsideMargin
+        placeholder: '#'
+        max: 99
+        min: 0
       }
     }
   }

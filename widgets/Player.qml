@@ -38,6 +38,8 @@ Row {
     color: Theme.bg
 
     Image {
+      readonly property var metadata: root.player?.metadata
+      readonly property string artUrl: (metadata && metadata['mpris:trackid']?.startsWith('/com/spotify/local/')) ? '' : (root.player?.trackArtUrl ?? '')
       anchors.fill: parent
       source: root.player?.trackArtUrl ?? ""
       smooth: true
@@ -244,7 +246,7 @@ Row {
                 height: implicitHeight
                 // anchors.horizontalCenter: parent.horizontalCenter
                 horizontalAlignment: Text.AlignHCenter
-                text: modelData[1]
+                text: modelData[1] || '...'
                 color: index === PlayerData.currentLyricIndex ? Theme.fg : Theme.surface2
 
                 y: root.heights.slice(0, index).reduce((line, total) => total + line + 8, 0) - root.heights.slice(0, Math.max(PlayerData.currentLyricIndex, 0)).reduce((line, total) => total + line + 8, 0)

@@ -1,10 +1,12 @@
-- lyric caching
-  - look into lrcget
 - clock, vol popup
   - clock: dashboard
   - vol: sliders, app(s) using mic
 - finish battery popup
 - finish rest of settings, including:
-  - monitors: drawing of monitors
   - status bar: drag and drop, right click an item for its settings
   - notifications: app-specific rules
+- toasts for automation toggles
+- osd for vol and brightness
+- make templates for vsc, gtk, spicetify
+- add border style, similar to celestia
+- overlay for discord (calls and messages)

@@ -22,7 +22,7 @@ Loader {
     },
     'Hyprland': {
       icon: '',
-      items: ['Autostart', 'Keybindings', 'Monitors', 'Windowrules', 'Input', 'Enviroment',]
+      items: ['Autostart', 'Keybindings', 'Monitors', 'Windowrules', 'Input', 'Environment',]
     },
     'Quickshell': {
       icon: '󰧨',

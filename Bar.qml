@@ -4,6 +4,7 @@ import Quickshell
 import QtQuick
 
 import "widgets"
+import "."
 
 Scope {
   property alias windows: variants.instances
@@ -21,16 +22,18 @@ Scope {
       color: Theme.transparent
 
       anchors {
-        top: true
-        left: true
-        right: true
+        top: Settings.statusBarSide !== 'bottom'
+        left: Settings.statusBarSide !== 'right'
+        right: Settings.statusBarSide !== 'left'
+        bottom: Settings.statusBarSide !== 'top'
       }
 
       // qmllint disable unqualified
       margins {
-        top: Theme.outsideMargin
-        left: Theme.outsideMargin
-        right: Theme.outsideMargin
+        top: Settings.statusBarSide !== 'bottom' && Theme.outsideMargin
+        left: Settings.statusBarSide !== 'right' && Theme.outsideMargin
+        right: Settings.statusBarSide !== 'left' && Theme.outsideMargin
+        bottom: Settings.statusBarSide !== 'top' && Theme.outsideMargin
       }
       // qmllint enable unqualified
 

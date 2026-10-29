@@ -23,6 +23,11 @@ Rectangle {
     ColorAnim {}
   }
 
+  MouseArea {
+    anchors.fill: parent
+    onPressed: input.forceActiveFocus()
+  }
+
   Label {
     visible: input.text.length === 0
     text: root.placeholder
