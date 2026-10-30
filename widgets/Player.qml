@@ -38,10 +38,8 @@ Row {
     color: Theme.bg
 
     Image {
-      readonly property var metadata: root.player?.metadata
-      readonly property string artUrl: (metadata && metadata['mpris:trackid']?.startsWith('/com/spotify/local/')) ? '' : (root.player?.trackArtUrl ?? '')
       anchors.fill: parent
-      source: root.player?.trackArtUrl ?? ""
+      source: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : "")
       smooth: true
       mipmap: true
     }
@@ -92,7 +90,7 @@ Row {
 
             Image {
               anchors.fill: parent
-              source: root.player?.trackArtUrl ?? ""
+              source: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : "")
               smooth: true
               mipmap: true
             }
