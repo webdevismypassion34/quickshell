@@ -66,4 +66,8 @@ Scope {
   App {
     id: settings
   }
+
+  OSD {
+    id: osd
+  }
 }

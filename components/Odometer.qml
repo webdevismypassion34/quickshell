@@ -6,6 +6,7 @@ Item {
   id: root
 
   property int value: 0 // any number
+  property color color: Theme.fg
 
   implicitWidth: 8.1
   implicitHeight: Theme.fontSize
@@ -22,11 +23,13 @@ Item {
     id: digit1
     text: (Math.floor(root.digitAt / 2) * 2 + 1) % 10
     y: ((root.scrollHeight) % (Theme.fontSize * 2)) - Theme.fontSize
+    color: root.color
   }
 
   Label {
     id: digit2
     text: (Math.floor((root.digitAt - 1) / 2) * 2 + 2) % 10
     y: ((root.scrollHeight + Theme.fontSize) % (Theme.fontSize * 2)) - Theme.fontSize
+    color: root.color
   }
 }
