@@ -260,10 +260,6 @@ PopupButton {
 
                     readonly property int iconSize: 40
 
-                    function getIcon(name) {
-                      return Quickshell.iconPath(name);
-                    }
-
                     implicitHeight: iconSize
                     implicitWidth: icon.iconSize
 
@@ -279,7 +275,7 @@ PopupButton {
 
                       IconImage {
                         anchors.fill: parent
-                        source: root.modelData ? icon.getIcon(root.modelData.appIcon) : ''
+                        source: root.modelData ? NotificationData.getIcon(root.modelData.appIcon, root.modelData.appName) : ''
                       }
                     }
                   }

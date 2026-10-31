@@ -1,4 +1,5 @@
 //@ pragma IgnoreSystemSettings
+//@ pragma IconTheme Papirus-Dark
 
 import Quickshell
 import Quickshell.Hyprland
@@ -30,9 +31,9 @@ Scope {
 
   IpcHandler {
     target: 'capture'
-    
+
     function open(): void {
-      capture.open()
+      capture.open();
     }
   }
 
@@ -40,7 +41,7 @@ Scope {
     target: 'settings'
 
     function open(): void {
-      settings.open()
+      settings.open();
     }
   }
 
