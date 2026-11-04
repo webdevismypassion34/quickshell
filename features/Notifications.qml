@@ -196,13 +196,6 @@ PanelWindow {
               }
 
               IconImage {
-                readonly property var appIcon: () => {
-                  if (root.modelData.appName === 'NetworkManager Applet')
-                    return Quickshell.iconPath('network-workgroup')
-
-                  return Quickshell.iconPath(root.modelData.appIcon)
-                }
-
                 anchors.fill: parent
                 source: root.modelData ? NotificationData.getIcon(root.modelData.appIcon, root.modelData.appName) : ''
               }

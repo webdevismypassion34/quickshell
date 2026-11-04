@@ -3,6 +3,7 @@ import QtQuick.Shapes
 import Quickshell.Services.UPower
 import ".."
 import "../components"
+import "../animations"
 
 PopupButton {
   id: root
@@ -103,9 +104,7 @@ PopupButton {
             sweepAngle: 360 * (root.battery / 100)
 
             Behavior on sweepAngle {
-              NumberAnimation {
-                duration: 200
-              }
+              NumberAnim {}
             }
           }
         }

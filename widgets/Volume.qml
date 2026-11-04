@@ -7,7 +7,7 @@ import "../animations"
 PopupButton {
   id: root
   readonly property PwNode sink: Pipewire.defaultAudioSink
-  readonly property int volume: Math.round(sink?.audio?.volume * 100 ?? 0)
+  readonly property int volume: Math.round((sink?.audio?.volume ?? 0) * 100)
 
   function getIcon(vol) {
     return vol === 0 ? '' : ''

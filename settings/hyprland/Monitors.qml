@@ -91,7 +91,7 @@ Column {
 
     spacing: 4
 
-    readonly property var m: root.monitors.values[root.selected]
+    readonly property var m: root.monitors.values[root.selected] ?? root.monitors.values[0]
 
     Row {
       Label {

@@ -18,12 +18,8 @@ Row {
 
   readonly property string hours: pad(clock.hours)
   readonly property string mm: pad(clock.minutes)
-  readonly property string month: clock.date.toLocaleDateString(Qt.locale('pl_PL'), "MMM")
+  readonly property string month: clock.date.toLocaleDateString(Qt.locale('en_US'), "MMM")
   readonly property string day: pad(clock.date.getDate())
-
-  readonly property var digits: [hours[0], hours[1]]
-
-  // text: `${hours}:${mm} ${month} ${day}`
 
   height: Theme.fontSize
   width: Theme.fontSize

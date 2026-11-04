@@ -120,7 +120,7 @@ PanelWindow {
 
           Label {
             width: Theme.fontSize * 1.4
-            text: panelWindow.muted ? ' ' : ['', '', '', ''][Math.ceil(panelWindow.volume * 3)] + ' '
+            text: panelWindow.muted ? ' ' : ['', '', '', ''][Math.min(3, Math.ceil(panelWindow.volume * 3))] + ' '
             color: panelWindow.muted ? Theme.surface2 : Theme.fg
           }
 
