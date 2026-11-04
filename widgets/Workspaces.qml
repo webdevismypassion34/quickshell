@@ -45,9 +45,9 @@ Item {
 
       function onActiveChanged() {
         if (!drag.drag.active) {
-          const pos = Math.round(active.x / (row.buttonWidth + row.spacing));
-          container.workspaces[pos].activate();
-          active.x = (row.buttonWidth + row.spacing) * pos;
+          const pos = Math.round(active.x / (row.buttonWidth + row.spacing))
+          container.workspaces[pos].activate()
+          active.x = (row.buttonWidth + row.spacing) * pos
         }
       }
     }

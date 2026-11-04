@@ -11,9 +11,9 @@ Singleton {
   function getIcon(icon, app) {
     // manually for apps with no icon
     if (icon === 'NetworkManager Applet')
-      return Quickshell.iconPath('network-workgroup');
+      return Quickshell.iconPath('network-workgroup')
 
     // default
-    return Quickshell.iconPath(icon);
+    return Quickshell.iconPath(icon)
   }
 }

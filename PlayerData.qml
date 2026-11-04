@@ -26,98 +26,93 @@ Singleton {
     target: root.player
 
     function onPostTrackChanged() {
-      const id = `${root.player.trackTitle}:${root.player.trackArtist}`;
+      const id = `${root.player.trackTitle}:${root.player.trackArtist}`
       if (id === root.lastTrack)
-        return;
-      root.lastTrack = id;
+        return
+      root.lastTrack = id
 
       // lyric fetch and cache
 
       root.lyrics = {
         available: false,
         lyrics: []
-      };
+      }
 
-      const cachePath = `${root.lyricsCacheDir}/${Utils.hash(id)}.json`;
+      const cachePath = `${root.lyricsCacheDir}/${Utils.hash(id)}.json`
 
       Utils.readFile(cachePath, text => {
         if (root.lastTrack !== id)
-          return;
-
+          return
         if (text) {
-          root.lyrics = JSON.parse(text);
-          return;
+          root.lyrics = JSON.parse(text)
+          return
         }
 
-        const xhr = new XMLHttpRequest();
+        const xhr = new XMLHttpRequest()
         xhr.onreadystatechange = () => {
           if (xhr.readyState !== XMLHttpRequest.DONE)
-            return;
-
+            return
           if (root.lastTrack !== id)
-            return;
-
+            return
           if (xhr.status !== 200) {
-            return;
+            return
           }
 
-          const data = JSON.parse(xhr.responseText);
+          const data = JSON.parse(xhr.responseText)
 
           if (!data.syncedLyrics) {
-            return;
+            return
           }
 
           let lyrics = data.syncedLyrics.split('\n').map(line => {
-            const [, mm, ss, cs, words] = line.match(/\[(..):(..)\.(..)\] ?(.*)/);
-            const time = (+mm) * 60 + (+ss) + (+cs) / 100;
-            return [time, words];
-          });
+            const [, mm, ss, cs, words] = line.match(/\[(..):(..)\.(..)\] ?(.*)/)
+            const time = (+mm) * 60 + (+ss) + (+cs) / 100
+            return [time, words]
+          })
 
           root.lyrics = {
             available: !!data.syncedLyrics,
             lyrics: lyrics
-          };
+          }
 
-          Utils.writeFile(cachePath, JSON.stringify(root.lyrics));
-        };
-        xhr.open('GET', `https://lrclib.net/api/get?track_name=${encodeURIComponent(player.trackTitle)}&artist_name=${encodeURIComponent(player.trackArtist)}`);
-        xhr.send();
-      });
+          Utils.writeFile(cachePath, JSON.stringify(root.lyrics))
+        }
+        xhr.open('GET', `https://lrclib.net/api/get?track_name=${encodeURIComponent(player.trackTitle)}&artist_name=${encodeURIComponent(player.trackArtist)}`)
+        xhr.send()
+      })
 
       // art extraction and cache
 
-      const metadata = root.player.metadata;
-      const local = metadata['mpris:trackid'].startsWith('/com/spotify/local/');
+      const metadata = root.player.metadata
+      const local = metadata['mpris:trackid'].startsWith('/com/spotify/local/')
 
-      root.localArt = '';
+      root.localArt = ''
 
       if (local) {
-        const artCachePath = `${root.artsCacheDir}/${Utils.hash(id)}.jpg`;
+        const artCachePath = `${root.artsCacheDir}/${Utils.hash(id)}.jpg`
 
         Utils.readFile(artCachePath, text => {
           if (root.lastTrack !== id)
-            return;
-
+            return
           if (text) {
-            root.localArt = artCachePath;
-            return;
+            root.localArt = artCachePath
+            return
           }
 
           Utils.exec(['xdg-user-dir', 'MUSIC'], musicDir => {
             if (root.lastTrack !== id)
-              return;
-
-            const file = `${musicDir.trim()}/${metadata['xesam:title']}.mp3`;
+              return
+            const file = `${musicDir.trim()}/${metadata['xesam:title']}.mp3`
 
             Utils.exec({
               command: ['sh', '-c', `mkdir -p "$(dirname '${artCachePath}')" && ffmpeg -y -i '${file.replace(/'/g, "'\\''")}' -an -c:v copy -update 1 '${artCachePath}'`]
             }, () => {
               if (root.lastTrack !== id)
-                return;
-              root.localArt = artCachePath;
-            });
-          });
-        });
+                return
+              root.localArt = artCachePath
+            })
+          })
+        })
       }
     }
   }

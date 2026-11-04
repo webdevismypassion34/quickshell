@@ -21,7 +21,7 @@ Row {
     target: root.player
 
     function onTrackTitleChanged() {
-      root.heights = [];
+      root.heights = []
     }
   }
 
@@ -116,7 +116,7 @@ Row {
 
               ClickArea {
                 onClicked: mouse => {
-                  root.player.position = (mouse.x / length.width) * root.player?.length ?? 0;
+                  root.player.position = (mouse.x / length.width) * root.player?.length ?? 0
                 }
               }
             }
@@ -258,9 +258,9 @@ Row {
                 }
 
                 onHeightChanged: {
-                  const next = root.heights.slice();
-                  next[index] = height;
-                  root.heights = next;
+                  const next = root.heights.slice()
+                  next[index] = height
+                  root.heights = next
                 }
               }
             }

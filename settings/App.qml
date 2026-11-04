@@ -33,7 +33,7 @@ Loader {
   property var selectedSection: Object.entries(sections)[0][0]
 
   function open() {
-    root.active = true;
+    root.active = true
   }
 
   sourceComponent: FloatingWindow {
@@ -46,7 +46,7 @@ Loader {
 
     onVisibleChanged: {
       if (!visible)
-        root.active = false;
+        root.active = false
     }
 
     MouseArea {
@@ -122,8 +122,8 @@ Loader {
 
                 ClickArea {
                   onClicked: {
-                    root.selectedPage = page.modelData;
-                    root.selectedSection = section.modelData[0];
+                    root.selectedPage = page.modelData
+                    root.selectedSection = section.modelData[0]
                   }
                 }
 

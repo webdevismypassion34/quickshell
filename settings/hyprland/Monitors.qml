@@ -21,14 +21,14 @@ Column {
   property int selected: 0
 
   Component.onCompleted: {
-    const boundRight = monitors.values.reduce((max, monitor) => Math.max(max, monitor.x + monitor.width), 0);
-    const boundLeft = monitors.values.reduce((min, monitor) => Math.min(min, monitor.x), 0);
+    const boundRight = monitors.values.reduce((max, monitor) => Math.max(max, monitor.x + monitor.width), 0)
+    const boundLeft = monitors.values.reduce((min, monitor) => Math.min(min, monitor.x), 0)
 
-    const boundBottom = monitors.values.reduce((max, monitor) => Math.max(max, monitor.y + monitor.height), 0);
-    const boundTop = monitors.values.reduce((min, monitor) => Math.min(min, monitor.y), 0);
+    const boundBottom = monitors.values.reduce((max, monitor) => Math.max(max, monitor.y + monitor.height), 0)
+    const boundTop = monitors.values.reduce((min, monitor) => Math.min(min, monitor.y), 0)
 
-    totalWidth = boundRight - boundLeft;
-    totalHeight = boundBottom - boundTop;
+    totalWidth = boundRight - boundLeft
+    totalHeight = boundBottom - boundTop
   }
 
   Item {

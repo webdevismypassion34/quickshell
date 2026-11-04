@@ -17,27 +17,27 @@ PanelWindow {
   color: Theme.transparent
 
   function search(q) {
-    const fuzzy = Utils.fuzzySearch(q, DesktopEntries.applications.values, "name");
+    const fuzzy = Utils.fuzzySearch(q, DesktopEntries.applications.values, "name")
 
     /*
     if (query.startsWith('=')) {
-      await execAsync(['qalc', '-t', query.slice(1).trim()])
-        .then(out => {
-          if (out == '>') return;
-          result.unshift([
-            '',
-            `${query.slice(1).trim()} = ${out}`,
-            null,
-            '',
-            `wl-copy "${out}"`,
-            false,
-          ]);
-        })
-        .catch(() => {});
+    await execAsync(['qalc', '-t', query.slice(1).trim()])
+    .then(out => {
+    if (out == '>') return;
+    result.unshift([
+    '',
+    `${query.slice(1).trim()} = ${out}`,
+    null,
+    '',
+    `wl-copy "${out}"`,
+    false,
+    ]);
+    })
+    .catch(() => {});
     }
     */
 
-    return [...fuzzy].slice(0, 10);
+    return [...fuzzy].slice(0, 10)
   }
 
   readonly property var desktopEntries: search(searchInput.text)
@@ -47,17 +47,17 @@ PanelWindow {
 
   onPopupOpenChanged: {
     if (!popupOpen)
-      closeTimer.restart();
+      closeTimer.restart()
     else
-      searchInput.input.forceActiveFocus();
+      searchInput.input.forceActiveFocus()
   }
 
   Timer {
     id: closeTimer
     interval: Theme.animDuration
     onTriggered: {
-      searchInput.text = '';
-      popupWindow.selected = 0;
+      searchInput.text = ''
+      popupWindow.selected = 0
     }
   }
 
@@ -73,7 +73,7 @@ PanelWindow {
   }
 
   function togglePopup() {
-    Popups.openPopup = (Popups.openPopup === popupWindow) ? null : popupWindow;
+    Popups.openPopup = (Popups.openPopup === popupWindow) ? null : popupWindow
   }
 
   ClippingRectangle {
@@ -112,25 +112,25 @@ PanelWindow {
         radius: Theme.rounding
 
         onTextChanged: {
-          popupWindow.selected = 0;
+          popupWindow.selected = 0
         }
 
         onAccepted: {
-          const selected = Math.max(Utils.mod(popupWindow.selected, Math.round(content.height / 37)) - 1, 0);
-          popupWindow.desktopEntries[selected].execute();
-          popupWindow.togglePopup();
+          const selected = Math.max(Utils.mod(popupWindow.selected, Math.round(content.height / 37)) - 1, 0)
+          popupWindow.desktopEntries[selected].execute()
+          popupWindow.togglePopup()
         }
 
         Keys.onPressed: event => {
           if (event.key === Qt.Key_Down) {
-            popupWindow.selected += 1;
-            event.accepted = true;
+            popupWindow.selected += 1
+            event.accepted = true
           } else if (event.key === Qt.Key_Up) {
-            popupWindow.selected -= 1;
-            event.accepted = true;
+            popupWindow.selected -= 1
+            event.accepted = true
           } else if (event.key === Qt.Key_Escape) {
-            popupWindow.togglePopup();
-            event.accepted = true;
+            popupWindow.togglePopup()
+            event.accepted = true
           }
         }
       }

@@ -18,16 +18,16 @@ Rectangle {
 
   function close() {
     if (!shown)
-      return;
-    shown = false;
-    bar.stop();
-    closeTimer.restart();
+      return
+    shown = false
+    bar.stop()
+    closeTimer.restart()
   }
 
   Component.onCompleted: {
-    shown = true;
+    shown = true
     if (!persistent)
-      bar.restart();
+      bar.restart()
   }
 
   radius: Theme.rounding
@@ -92,11 +92,11 @@ Rectangle {
       property real progress: 1
 
       function restart() {
-        progress = 1;
-        anim.restart();
+        progress = 1
+        anim.restart()
       }
       function stop() {
-        anim.stop();
+        anim.stop()
       }
 
       color: root.accentColor

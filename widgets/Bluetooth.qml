@@ -15,11 +15,11 @@ PopupButton {
 
   function getIcon(name) {
     if (name === 'audio-headset') {
-      return '󰋋';
+      return '󰋋'
     } else if (name === 'none') {
-      return '󰂲';
+      return '󰂲'
     } else {
-      return '';
+      return ''
     }
   }
 
@@ -112,7 +112,7 @@ PopupButton {
         anchors.fill: parent
         cursorShape: Qt.PointingHandCursor
         onClicked: () => {
-          root.connectedDevice.disconnect();
+          root.connectedDevice.disconnect()
         }
       }
     }
@@ -226,7 +226,7 @@ PopupButton {
               anchors.fill: parent
               cursorShape: Qt.PointingHandCursor
               onClicked: () => {
-                device.modelData.connect();
+                device.modelData.connect()
               }
             }
           }

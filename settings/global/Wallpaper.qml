@@ -19,8 +19,8 @@ Column {
 
   Component.onCompleted: {
     Utils.exec(['awww', 'query', '--json'], stdout => {
-      root.selected = JSON.parse(stdout)[''][0].displaying.image;
-    });
+      root.selected = JSON.parse(stdout)[''][0].displaying.image
+    })
   }
 
   FolderListModel {
@@ -124,10 +124,10 @@ Column {
           Repeater {
             model: root.wallpapers.filter(item => item && (item.includes('.png') || item.includes('.jp'))).reduce((cols, item, i) => {
               if (i % 3 === 0)
-                cols.push([item]);
+                cols.push([item])
               else
-                cols[cols.length - 1].push(item);
-              return cols;
+                cols[cols.length - 1].push(item)
+              return cols
             }, [])
 
             Column {
@@ -172,8 +172,8 @@ Column {
                   ClickArea {
                     id: wallpaperSelect
                     onClicked: () => {
-                      Utils.exec(['awww', 'img', Settings.wallpaperDir + '/' + wallpaperSmall.modelData]);
-                      root.selected = Settings.wallpaperDir + '/' + wallpaperSmall.modelData;
+                      Utils.exec(['awww', 'img', Settings.wallpaperDir + '/' + wallpaperSmall.modelData])
+                      root.selected = Settings.wallpaperDir + '/' + wallpaperSmall.modelData
                     }
                   }
                 }

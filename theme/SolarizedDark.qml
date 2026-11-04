@@ -1,13 +1,12 @@
+// https://ethanschoonover.com/solarized/
+
 pragma Singleton
 
-import Quickshell
 import QtQuick
-
-// https://ethanschoonover.com/solarized/
+import Quickshell
 
 Singleton {
   readonly property string name: 'SolarizedDark'
-
   readonly property color purple: "#6c71c4"
   readonly property color red: "#dc322f"
   readonly property color orange: "#cb4b16"
@@ -15,7 +14,6 @@ Singleton {
   readonly property color green: "#859900"
   readonly property color blue: "#268bd2"
   readonly property color teal: "#2aa198"
-
   readonly property color text: "#93a1a1"
   readonly property color subtext1: "#839496"
   readonly property color subtext0: "#657b83"

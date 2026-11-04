@@ -5,11 +5,11 @@ Singleton {
   property var openPopup: null
 
   function toggle(popup) {
-    popup.togglePopup();
+    popup.togglePopup()
   }
 
   function close() {
     if (openPopup)
-      openPopup.togglePopup();
+      openPopup.togglePopup()
   }
 }

@@ -69,19 +69,19 @@ PanelWindow {
 
         function startCloseAnimation() {
           if (!modelData)
-            return;
-          timeout.running = false;
-          root.anchors.leftMargin = Theme.notificationWidth;
-          delete NotificationData.shownNotifications[modelData.id];
-          window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id]);
-          closeAnim.running = true;
+            return
+          timeout.running = false
+          root.anchors.leftMargin = Theme.notificationWidth
+          delete NotificationData.shownNotifications[modelData.id]
+          window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id])
+          closeAnim.running = true
         }
 
         Component.onDestruction: {
           if (modelData) {
-            delete NotificationData.shownNotifications[modelData.id];
-            delete NotificationData.notificationHeights[modelData.id];
-            window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id]);
+            delete NotificationData.shownNotifications[modelData.id]
+            delete NotificationData.notificationHeights[modelData.id]
+            window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id])
           }
         }
 
@@ -102,21 +102,21 @@ PanelWindow {
         property bool shown: true
 
         Component.onCompleted: {
-          loading = false;
+          loading = false
           if (!modelData || NotificationData.toastedNotifications[modelData.id]) {
-            shown = false;
-            return;
+            shown = false
+            return
           }
-          NotificationData.shownNotifications[modelData.id] = true;
-          root.anchors.leftMargin = 0;
-          window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id]);
-          shown = true;
+          NotificationData.shownNotifications[modelData.id] = true
+          root.anchors.leftMargin = 0
+          window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id])
+          shown = true
         }
 
         MouseArea {
           anchors.fill: parent
           onClicked: () => {
-            root.startCloseAnimation();
+            root.startCloseAnimation()
           }
         }
 
@@ -124,7 +124,7 @@ PanelWindow {
           id: timeout
           interval: window.toastDuration - Theme.animDuration
           onTriggered: () => {
-            root.startCloseAnimation();
+            root.startCloseAnimation()
           }
           running: true
         }
@@ -133,9 +133,9 @@ PanelWindow {
           id: closeAnim
           interval: Theme.animDuration
           onTriggered: () => {
-            root.shown = false;
+            root.shown = false
             if (root.modelData)
-              NotificationData.toastedNotifications[root.modelData.id] = true;
+              NotificationData.toastedNotifications[root.modelData.id] = true
           }
           running: false
         }
@@ -148,9 +148,9 @@ PanelWindow {
         height: Theme.notificationHeight + body.implicitHeight - Theme.fontSize
         onHeightChanged: {
           if (!modelData)
-            return;
-          NotificationData.notificationHeights[modelData.id] = height;
-          window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id]);
+            return
+          NotificationData.notificationHeights[modelData.id] = height
+          window.notificationStack = notifications.trackedNotifications.values.filter(v => v && NotificationData.shownNotifications[v.id])
         }
         radius: Theme.rounding
         color: Theme.withOpacity(Theme.bg, 0.3)
@@ -198,9 +198,9 @@ PanelWindow {
               IconImage {
                 readonly property var appIcon: () => {
                   if (root.modelData.appName === 'NetworkManager Applet')
-                    return Quickshell.iconPath('network-workgroup');
+                    return Quickshell.iconPath('network-workgroup')
 
-                  return Quickshell.iconPath(root.modelData.appIcon);
+                  return Quickshell.iconPath(root.modelData.appIcon)
                 }
 
                 anchors.fill: parent
@@ -235,7 +235,7 @@ PanelWindow {
     id: notifications
     keepOnReload: false
     onNotification: notification => {
-      notification.tracked = true;
+      notification.tracked = true
       NotificationData.notifications = [...NotificationData.notifications,
         {
           id: notification.id,
@@ -244,7 +244,7 @@ PanelWindow {
           body: notification.body,
           appName: notification.appName
         }
-      ];
+      ]
     }
   }
 }

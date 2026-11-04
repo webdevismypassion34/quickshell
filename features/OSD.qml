@@ -31,13 +31,13 @@ PanelWindow {
     target: panelWindow.audio
 
     function onVolumeChanged() {
-      closeTimer.restart();
-      panelWindow.osdActive = true;
+      closeTimer.restart()
+      panelWindow.osdActive = true
     }
 
     function onMutedChanged() {
-      closeTimer.restart();
-      panelWindow.osdActive = true;
+      closeTimer.restart()
+      panelWindow.osdActive = true
     }
   }
 
@@ -55,7 +55,7 @@ PanelWindow {
     running: false
     repeat: false
     onTriggered: {
-      panelWindow.startingVolume = Pipewire.defaultAudioSink.audio.volume;
+      panelWindow.startingVolume = Pipewire.defaultAudioSink.audio.volume
     }
   }
 
@@ -65,8 +65,8 @@ PanelWindow {
     running: false
     repeat: false
     onTriggered: {
-      closeAnimationTimer.start();
-      panelWindow.osdActive = false;
+      closeAnimationTimer.start()
+      panelWindow.osdActive = false
     }
   }
 

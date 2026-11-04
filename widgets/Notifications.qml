@@ -27,23 +27,23 @@ PopupButton {
     readonly property int footerHeight: 24
 
     function groupNotifications(n) {
-      const groups = {};
+      const groups = {}
 
       n.forEach(v => {
-        const name = v.appName;
+        const name = v.appName
 
         if (groups[name]) {
-          groups[name].push(v);
+          groups[name].push(v)
         } else {
-          groups[name] = [v];
+          groups[name] = [v]
         }
-      });
+      })
 
-      return Object.entries(groups);
+      return Object.entries(groups)
     }
 
     function footerKey(name) {
-      return `footer:${name}`;
+      return `footer:${name}`
     }
 
     property var openedNotifications: ({})
@@ -51,43 +51,43 @@ PopupButton {
     readonly property var groupedNotifications: window.groupNotifications(NotificationData.notifications.filter(v => v && v.id !== undefined))
 
     readonly property var notificationStack: {
-      const entries = [];
+      const entries = []
 
       window.groupedNotifications.forEach(([name, notifs]) => {
-        const expanded = !!window.openedNotifications[name];
-        const visible = expanded ? notifs : [notifs[0]];
+        const expanded = !!window.openedNotifications[name]
+        const visible = expanded ? notifs : [notifs[0]]
 
         visible.forEach(n => {
           if (n && !NotificationData.excusedNotifications[n.id]) {
             entries.push({
               key: n.id,
               height: NotificationData.notificationHeights[n.id] ?? Theme.notificationHeight
-            });
+            })
           }
-        });
+        })
 
         if (notifs.length > 1) {
           entries.push({
             key: window.footerKey(name),
             height: window.footerHeight
-          });
+          })
         }
-      });
+      })
 
-      return entries;
+      return entries
     }
 
     readonly property var stackOffsets: {
-      const offsets = {};
-      let total = 0;
+      const offsets = {}
+      let total = 0
 
       window.notificationStack.forEach(entry => {
-        offsets[entry.key] = total;
-        total += entry.height + 4;
-      });
+        offsets[entry.key] = total
+        total += entry.height + 4
+      })
 
-      offsets.total = total;
-      return offsets;
+      offsets.total = total
+      return offsets
     }
 
     width: button.popupWidth
@@ -160,13 +160,13 @@ PopupButton {
 
                 function startCloseAnimation() {
                   if (!modelData)
-                    return;
-                  root.width = 0;
-                  closedId = modelData.id;
+                    return
+                  root.width = 0
+                  closedId = modelData.id
                   NotificationData.excusedNotifications = Object.assign({}, NotificationData.excusedNotifications, {
                     [modelData.id]: true
-                  });
-                  closeAnim.running = true;
+                  })
+                  closeAnim.running = true
                 }
 
                 readonly property int topMargin: modelData ? (window.stackOffsets[modelData.id] ?? -height) : -height
@@ -191,19 +191,19 @@ PopupButton {
                 property bool shown: true
 
                 Component.onCompleted: {
-                  loading = false;
+                  loading = false
                   if (!modelData || NotificationData.excusedNotifications[modelData.id]) {
-                    shown = false;
+                    shown = false
                   } else {
-                    shown = true;
-                    root.width = Theme.notificationWidth;
+                    shown = true
+                    root.width = Theme.notificationWidth
                   }
                 }
 
                 MouseArea {
                   anchors.fill: parent
                   onClicked: () => {
-                    root.startCloseAnimation();
+                    root.startCloseAnimation()
                   }
                 }
 
@@ -211,17 +211,17 @@ PopupButton {
                   id: closeAnim
                   interval: Theme.animDuration
                   onTriggered: () => {
-                    root.shown = false;
+                    root.shown = false
                     if (root.closedId != null) {
-                      NotificationData.notifications = NotificationData.notifications.filter(v => v && v.id !== root.closedId);
+                      NotificationData.notifications = NotificationData.notifications.filter(v => v && v.id !== root.closedId)
 
-                      const nextExcused = Object.assign({}, NotificationData.excusedNotifications);
-                      delete nextExcused[root.closedId];
-                      NotificationData.excusedNotifications = nextExcused;
+                      const nextExcused = Object.assign({}, NotificationData.excusedNotifications)
+                      delete nextExcused[root.closedId]
+                      NotificationData.excusedNotifications = nextExcused
 
-                      const nextHeights = Object.assign({}, NotificationData.notificationHeights);
-                      delete nextHeights[root.closedId];
-                      NotificationData.notificationHeights = nextHeights;
+                      const nextHeights = Object.assign({}, NotificationData.notificationHeights)
+                      delete nextHeights[root.closedId]
+                      NotificationData.notificationHeights = nextHeights
                     }
                   }
                   running: false
@@ -231,10 +231,10 @@ PopupButton {
                 height: Theme.notificationHeight + body.implicitHeight - Theme.fontSize
                 onHeightChanged: {
                   if (!modelData)
-                    return;
+                    return
                   NotificationData.notificationHeights = Object.assign({}, NotificationData.notificationHeights, {
                     [modelData.id]: height
-                  });
+                  })
                 }
                 radius: Theme.rounding
                 color: Theme.withOpacity(Theme.bg, 0.3)
@@ -324,10 +324,10 @@ PopupButton {
 
                 ClickArea {
                   onClicked: {
-                    const name = group.modelData[0];
-                    const next = Object.assign({}, window.openedNotifications);
-                    next[name] = !next[name];
-                    window.openedNotifications = next;
+                    const name = group.modelData[0]
+                    const next = Object.assign({}, window.openedNotifications)
+                    next[name] = !next[name]
+                    window.openedNotifications = next
                   }
                 }
               }
@@ -338,7 +338,7 @@ PopupButton {
 
                 ClickArea {
                   onClicked: {
-                    NotificationData.notifications = NotificationData.notifications.filter(v => v.appName !== group.modelData[0]);
+                    NotificationData.notifications = NotificationData.notifications.filter(v => v.appName !== group.modelData[0])
                   }
                 }
               }

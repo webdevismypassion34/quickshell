@@ -1,6 +1,6 @@
-import QtQuick
 import ".."
 import "../animations"
+import QtQuick
 
 Rectangle {
   id: root
@@ -16,6 +16,14 @@ Rectangle {
 
   signal accepted
 
+  function clamp(value) {
+    return Math.min(root.max, Math.max(root.min, value))
+  }
+
+  function step(delta) {
+    input.text = String(root.clamp((parseInt(input.text, 10) || 0) + delta))
+  }
+
   radius: Theme.rounding
   color: Theme.withOpacity(accentColor, 0.3)
   border.color: input.activeFocus ? Theme.accent : Theme.border
@@ -25,22 +33,11 @@ Rectangle {
 
   TextMetrics {
     id: metrics
+
     font.family: Theme.fontFamily
     font.pixelSize: Theme.fontSize
     font.weight: Theme.fontType
     text: '0'.repeat(root.valueDigits) + (root.showsSign ? '-' : '')
-  }
-
-  function clamp(value) {
-    return Math.min(root.max, Math.max(root.min, value));
-  }
-
-  function step(delta) {
-    input.text = String(root.clamp((parseInt(input.text, 10) || 0) + delta));
-  }
-
-  Behavior on border.color {
-    ColorAnim {}
   }
 
   MouseArea {
@@ -63,8 +60,25 @@ Rectangle {
   TextInput {
     id: input
 
-    validator: RegularExpressionValidator {
-      regularExpression: /-?[0-9]*/
+    color: Theme.fg
+    font.family: Theme.fontFamily
+    font.pixelSize: Theme.fontSize
+    font.weight: Theme.fontType
+    selectionColor: Theme.blue
+    selectedTextColor: Theme.fg
+    clip: true
+    onAccepted: {
+      if (text.length)
+        text = String(root.clamp(parseInt(text, 10) || 0))
+
+      root.accepted()
+    }
+    onActiveFocusChanged: {
+      if (activeFocus)
+        return
+      deselect()
+      if (text.length)
+        text = String(root.clamp(parseInt(text, 10) || 0))
     }
 
     anchors {
@@ -75,30 +89,15 @@ Rectangle {
       rightMargin: 6
     }
 
-    color: Theme.fg
-    font.family: Theme.fontFamily
-    font.pixelSize: Theme.fontSize
-    font.weight: Theme.fontType
-    selectionColor: Theme.blue
-    selectedTextColor: Theme.fg
-    clip: true
-
-    onAccepted: {
-      if (text.length)
-        text = String(root.clamp(parseInt(text, 10) || 0));
-      root.accepted();
-    }
-    onActiveFocusChanged: {
-      if (activeFocus)
-        return;
-      deselect();
-      if (text.length)
-        text = String(root.clamp(parseInt(text, 10) || 0));
+    validator: RegularExpressionValidator {
+      regularExpression: /-?[0-9]*/
     }
   }
 
   Column {
     id: spinner
+
+    width: 14
 
     anchors {
       top: parent.top
@@ -106,7 +105,6 @@ Rectangle {
       right: parent.right
       rightMargin: 6
     }
-    width: 14
 
     Label {
       width: parent.width
@@ -119,6 +117,7 @@ Rectangle {
 
       ClickArea {
         id: increase
+
         onClicked: root.step(1)
       }
     }
@@ -134,8 +133,13 @@ Rectangle {
 
       ClickArea {
         id: decrease
+
         onClicked: root.step(-1)
       }
     }
+  }
+
+  Behavior on border.color {
+    ColorAnim {}
   }
 }

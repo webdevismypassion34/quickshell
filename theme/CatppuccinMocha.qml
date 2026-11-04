@@ -15,7 +15,7 @@ Singleton {
   readonly property color green: "#a6e3a1"
   readonly property color blue: "#89b4fa"
   readonly property color teal: "#94e2d5"
-  
+
   readonly property color text: "#cdd6f4"
   readonly property color subtext1: "#bac2de"
   readonly property color subtext0: "#a6adc8"

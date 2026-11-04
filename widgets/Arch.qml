@@ -32,13 +32,13 @@ PopupButton {
 
     function onRawEvent(event) {
       if (event.name === 'activewindow')
-        root.activeWindow = event.parse(0)[0].split(',')[0] ?? null;
+        root.activeWindow = event.parse(0)[0].split(',')[0] ?? null
     }
   }
 
   Column {
     spacing: root.nodeSpacing
-    width: root.nodeWidth 
+    width: root.nodeWidth
     height: root.popupHeight - 2
     anchors.horizontalCenter: parent.horizontalCenter
     y: 2
@@ -74,15 +74,15 @@ PopupButton {
           hoverColor: Theme.surface1
 
           onClicked: {
-            const [action, props] = node.modelData.action.split(':');
+            const [action, props] = node.modelData.action.split(':')
             if (action === 'run') {
               Quickshell.execDetached({
                 command: ['sh', '-c', props]
-              });
+              })
             } else if (action === 'dispatch') {
-              Hyprland.dispatch(props);
+              Hyprland.dispatch(props)
             }
-            Popups.close();
+            Popups.close()
           }
         }
       }

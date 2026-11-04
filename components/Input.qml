@@ -1,6 +1,6 @@
-import QtQuick
 import ".."
 import "../animations"
+import QtQuick
 
 Rectangle {
   id: root
@@ -18,10 +18,6 @@ Rectangle {
   border.width: 1
   width: 200
   height: 35
-
-  Behavior on border.color {
-    ColorAnim {}
-  }
 
   MouseArea {
     anchors.fill: parent
@@ -43,14 +39,6 @@ Rectangle {
   TextInput {
     id: input
 
-    anchors {
-      left: parent.left
-      right: parent.right
-      verticalCenter: parent.verticalCenter
-      leftMargin: 10
-      rightMargin: 10
-    }
-
     color: Theme.fg
     font.family: Theme.fontFamily
     font.pixelSize: Theme.fontSize
@@ -58,8 +46,23 @@ Rectangle {
     selectionColor: Theme.blue
     selectedTextColor: Theme.fg
     clip: true
-
     onAccepted: root.accepted()
-    onActiveFocusChanged: if (!activeFocus) deselect()
+    onActiveFocusChanged: {
+      if (!activeFocus) {
+        deselect()
+      }
+    }
+
+    anchors {
+      left: parent.left
+      right: parent.right
+      verticalCenter: parent.verticalCenter
+      leftMargin: 10
+      rightMargin: 10
+    }
+  }
+
+  Behavior on border.color {
+    ColorAnim {}
   }
 }

@@ -17,8 +17,8 @@ Singleton {
 
       stdout: StdioCollector {
         onStreamFinished: {
-          proc.onDone(text);
-          proc.destroy();
+          proc.onDone(text)
+          proc.destroy()
         }
       }
     }
@@ -27,36 +27,37 @@ Singleton {
   function exec(command, callback) {
     procComponent.createObject(utils, {
       onDone: callback ?? (() => {})
-    }).exec(command);
+    }).exec(command)
   }
 
   function readFile(path, callback) {
-    exec(['cat', path], callback);
+    exec(['cat', path], callback)
   }
 
   function writeFile(path, content) {
-    exec(['sh', '-c', 'mkdir -p "$(dirname "$1")" && printf %s "$2" > "$1"', 'sh', path, content]);
+    exec(['sh', '-c', 'mkdir -p "$(dirname "$1")" && printf %s "$2" > "$1"', 'sh', path, content])
   }
 
   readonly property var hash: str => [...str].reduce((h, c) => (Math.imul(31, h) + c.charCodeAt(0)) | 0, 0).toString(36)
 
   function fuzzyCompare(query, target) {
-    [query, target] = [query, target].map(v => v.toLowerCase());
+    [query, target] = [query, target].map(v => v.toLowerCase())
 
     let [score, qi, mi] = [0, 0, -1];
 
     [...target].forEach((char, i) => {
       if (char === query[qi]) {
-        let last = target[i - 1];
-        score += i === mi + 1 ? 5 : 1; // if its in a row theres points added
+        let last = target[i - 1]
+        score += i === mi + 1 ? 5 : 1
+        // if its in a row theres points added
         if (i === 0 || last === ' ' || last === '-' || last === '_')
-          score += 3;
-        mi = i;
-        qi++;
+          score += 3
+        mi = i
+        qi++
       }
-    });
+    })
 
-    return score;
+    return score
   }
 
   readonly property var fuzzySearch: (query, targets, key) => query ? targets.map(v => key ? {

@@ -28,19 +28,19 @@ Column {
       }
 
       onClicked: {
-        const selectedScheme = schemeSelect.displayText.replace(' ', '');
+        const selectedScheme = schemeSelect.displayText.replace(' ', '')
 
         // qmllint disable eval
         if (/^[a-zA-Z]+$/.test(selectedScheme) && Theme.selectedTheme.name !== selectedScheme)
-          Theme.selectedTheme = eval(selectedScheme);
+          Theme.selectedTheme = eval(selectedScheme)
         // qmllint enable eval
 
-        Theme.accent = Theme.selectedTheme[accentSelect.displayText.toLowerCase()];
-        Theme.rounding = +(radiusInput.text);
+        Theme.accent = Theme.selectedTheme[accentSelect.displayText.toLowerCase()]
+        Theme.rounding = +(radiusInput.text)
         Theme.power = +(powerInput.text)
-        Theme.outsideMargin = +(marginInput.text);
+        Theme.outsideMargin = +(marginInput.text)
 
-        Theme.changeGlobalTheme();
+        Theme.changeGlobalTheme()
       }
     }
   }
@@ -118,7 +118,7 @@ Column {
         min: 0
       }
     }
-    
+
     Row {
       id: power
 

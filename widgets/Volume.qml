@@ -10,7 +10,7 @@ PopupButton {
   readonly property int volume: Math.round(sink?.audio?.volume * 100 ?? 0)
 
   function getIcon(vol) {
-    return vol === 0 ? '' : '';
+    return vol === 0 ? '' : ''
   }
 
   PwObjectTracker {

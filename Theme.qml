@@ -61,7 +61,7 @@ Singleton {
 
   // functions
   function withOpacity(color, alpha) {
-    return Qt.rgba(color.r, color.g, color.b, alpha);
+    return Qt.rgba(color.r, color.g, color.b, alpha)
   }
 
   // only for templates
@@ -80,44 +80,44 @@ Singleton {
   }
 
   function changeGlobalTheme(theme) {
-    Settings.persistent.currentTheme = selectedTheme.name;
-    Settings.persistent.currentAccent = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple',].find(v => selectedTheme[v] === Theme.accent);
-    Settings.persistent.rounding = root.rounding;
-    Settings.persistent.outsideMargin = root.outsideMargin;
+    Settings.persistent.currentTheme = selectedTheme.name
+    Settings.persistent.currentAccent = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple',].find(v => selectedTheme[v] === Theme.accent)
+    Settings.persistent.rounding = root.rounding
+    Settings.persistent.outsideMargin = root.outsideMargin
 
-    const targets = JSON.parse(targetsFile.text());
+    const targets = JSON.parse(targetsFile.text())
     targets.targets.forEach(t => {
       const {
         template,
         target,
         posthook
-      } = t;
+      } = t
 
       Utils.exec({
         command: ['cat', template],
         workingDirectory: Settings.configDir + '/templates'
       }, stdout => {
         const content = stdout.replace(/\$\{([\w:]+)\}|\$(\w+)/g, (match, braced, bare) => {
-          let name = braced ?? bare;
-          let flags = [];
+          let name = braced ?? bare
+          let flags = []
           if (name.includes(':'))
-            [name, ...flags] = name.split(':');
+            [name, ...flags] = name.split(':')
 
-          let value = root[name] ?? selectedTheme[name] ?? null;
+          let value = root[name] ?? selectedTheme[name] ?? null
           if (value === null)
-            return match;
+            return match
 
           if (flags.includes('nohash'))
-            value = String(value).replace('#', '');
+            value = String(value).replace('#', '')
 
-          return value;
-        });
-        const targetFile = target.replace('%C', Quickshell.env("XDG_CONFIG_HOME"));
+          return value
+        })
+        const targetFile = target.replace('%C', Quickshell.env("XDG_CONFIG_HOME"))
 
         Utils.exec({
           command: ['sh', '-c', `mkdir -p "$(dirname '${targetFile}')" && printf '%s' '${content.replace(/'/g, "'\\''")}' > ${targetFile} && ${posthook}`]
-        });
-      });
-    });
+        })
+      })
+    })
   }
 }

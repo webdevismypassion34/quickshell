@@ -9,22 +9,22 @@ PopupButton {
 
   function getIcon(percent) {
     if (UPower.onBattery)
-      return ['󰂎', '󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰂂', '󰁹'][Math.round(percent / 10)] ?? '?';
+      return ['󰂎', '󰁺', '󰁻', '󰁼', '󰁽', '󰁾', '󰁿', '󰂀', '󰂁', '󰂂', '󰁹'][Math.round(percent / 10)] ?? '?'
     else
-      return ['󰢟', '󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋', '󰂅'][Math.round(percent / 10)] ?? '?';
+      return ['󰢟', '󰢜', '󰂆', '󰂇', '󰂈', '󰢝', '󰂉', '󰢞', '󰂊', '󰂋', '󰂅'][Math.round(percent / 10)] ?? '?'
   }
 
   function formatChangeRate(rate, state) {
-    const sign = state === UPowerDeviceState.Charging ? '+' : state === UPowerDeviceState.Discharging ? '-' : '';
-    return `${sign}${rate.toFixed(1)} W`;
+    const sign = state === UPowerDeviceState.Charging ? '+' : state === UPowerDeviceState.Discharging ? '-' : ''
+    return `${sign}${rate.toFixed(1)} W`
   }
 
   function formatDuration(seconds) {
     if (!seconds)
-      return 'calculating...';
-    const h = Math.floor(seconds / 3600);
-    const m = Math.round((seconds % 3600) / 60);
-    return h > 0 ? `${h}h ${m}m` : `${m}m`;
+      return 'calculating...'
+    const h = Math.floor(seconds / 3600)
+    const m = Math.round((seconds % 3600) / 60)
+    return h > 0 ? `${h}h ${m}m` : `${m}m`
   }
 
   readonly property UPowerDevice device: UPower.displayDevice
@@ -117,7 +117,7 @@ PopupButton {
         font.pixelSize: 21
       }
     }
-    
+
     Column {
       Label {
         text: `Status: ${UPowerDeviceState.toString(root.device.state)}`
@@ -129,11 +129,11 @@ PopupButton {
 
       Label {
         text: {
-          const empty = root.device.timeToEmpty;
-          const full = root.device.timeToFull;
+          const empty = root.device.timeToEmpty
+          const full = root.device.timeToFull
           if (!empty && !full)
-            return 'Time remaining: calculating...';
-          return empty > 0 ? `Time to empty: ${root.formatDuration(empty)}` : `Time to full: ${root.formatDuration(full)}`;
+            return 'Time remaining: calculating...'
+          return empty > 0 ? `Time to empty: ${root.formatDuration(empty)}` : `Time to full: ${root.formatDuration(full)}`
         }
       }
     }

@@ -8,7 +8,7 @@ Row {
   spacing: 0
 
   function pad(n) {
-    return String(n).padStart(2, "0");
+    return String(n).padStart(2, "0")
   }
 
   SystemClock {

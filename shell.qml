@@ -13,11 +13,11 @@ Scope {
     target: "notifications"
 
     function shown(): string {
-      return JSON.stringify(NotificationData.shownNotifications);
+      return JSON.stringify(NotificationData.shownNotifications)
     }
 
     function get(): string {
-      return JSON.stringify(NotificationData.notifications);
+      return JSON.stringify(NotificationData.notifications)
     }
   }
 
@@ -25,7 +25,7 @@ Scope {
     target: 'launcher'
 
     function toggle(): void {
-      Popups.toggle(launcher);
+      Popups.toggle(launcher)
     }
   }
 
@@ -33,7 +33,7 @@ Scope {
     target: 'capture'
 
     function open(): void {
-      capture.open();
+      capture.open()
     }
   }
 
@@ -41,7 +41,7 @@ Scope {
     target: 'settings'
 
     function open(): void {
-      settings.open();
+      settings.open()
     }
   }
 

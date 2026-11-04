@@ -14,9 +14,9 @@ PopupButton {
 
   function getIcon(connectedWifi) {
     if (connectedWifi)
-      return ['󰤯', '󰤟', '󰤥', '󰤨'][Math.round(connectedWifi.signalStrength * 4 - 1)] ?? '?';
+      return ['󰤯', '󰤟', '󰤥', '󰤨'][Math.round(connectedWifi.signalStrength * 4 - 1)] ?? '?'
     else
-      return '󰤮';
+      return '󰤮'
   }
 
   readonly property var wifi: Networking?.devices?.values.filter(n => n.name === 'wlp2s0' || n.name === 'wlan0')[0]
@@ -34,33 +34,33 @@ PopupButton {
     path: "/home/alexmn/.cache/Proton/VPN/serverlist.json"
 
     readonly property var freeCountries: {
-      let data;
+      let data
 
       try {
-        data = JSON.parse(text());
+        data = JSON.parse(text())
       } catch (err) {
-        return;
+        return
       }
 
-      const servers = data.LogicalServers.filter(s => s.Tier === 0);
-      let groupedServers = {};
+      const servers = data.LogicalServers.filter(s => s.Tier === 0)
+      let groupedServers = {}
 
       servers.forEach(server => {
         if (groupedServers[server.City]) {
-          groupedServers[server.City].locations++;
+          groupedServers[server.City].locations++
         } else {
           groupedServers[server.City] = {
             country: server.ExitCountry,
             locations: 1
-          };
+          }
         }
-      });
+      })
 
       const countryData = Object.entries(groupedServers).sort(function (x, y) {
-        return x[1].country.localeCompare(y[1].country) || x[0].localeCompare(y[0]);
-      });
+        return x[1].country.localeCompare(y[1].country) || x[0].localeCompare(y[0])
+      })
 
-      return countryData;
+      return countryData
     }
   }
 
@@ -68,12 +68,12 @@ PopupButton {
   Process {
     id: proc
     onStarted: () => {
-      root.vpnLabel = root.vpnEnabled ? 'Connecting...' : 'Disconnecting...';
-      root.vpnLoading = true;
+      root.vpnLabel = root.vpnEnabled ? 'Connecting...' : 'Disconnecting...'
+      root.vpnLoading = true
     }
     onExited: () => {
-      root.vpnLabel = root.vpnEnabled ? 'Connected' : 'Disconnected';
-      root.vpnLoading = false;
+      root.vpnLabel = root.vpnEnabled ? 'Connected' : 'Disconnected'
+      root.vpnLoading = false
     }
   }
   // qmllint enable signal-handler-parameters
@@ -111,7 +111,7 @@ PopupButton {
 
     ClickArea {
       onClicked: () => {
-        root.page = 0;
+        root.page = 0
       }
     }
   }
@@ -134,7 +134,7 @@ PopupButton {
 
     ClickArea {
       onClicked: () => {
-        root.page = 1;
+        root.page = 1
       }
     }
   }
@@ -143,6 +143,7 @@ PopupButton {
     id: enabledToggle
 
     onToggled: checked => root.page === 0 ? (Networking.wifiEnabled = checked) : (root.vpnEnabled = checked)
+
     accentColor: root.accentColor
     checked: root.page === 0 ? Networking.wifiEnabled : root.vpnEnabled
 
@@ -150,20 +151,20 @@ PopupButton {
       target: root
 
       function onPageChanged() {
-        enabledToggle.checked = root.page === 0 ? Networking.wifiEnabled : root.vpnEnabled;
+        enabledToggle.checked = root.page === 0 ? Networking.wifiEnabled : root.vpnEnabled
       }
 
       // @TODO handle spam
       function onVpnEnabledChanged() {
         if (root.vpnEnabled) {
-          root.vpnEnabled = true;
+          root.vpnEnabled = true
           proc.exec({
             command: ['python3', 'scripts/protonvpn_connect.py', root.vpnLocation],
             workingDirectory: Settings.configDir
-          });
+          })
         } else {
-          root.vpnEnabled = false;
-          proc.exec(['protonvpn', 'disconnect']);
+          root.vpnEnabled = false
+          proc.exec(['protonvpn', 'disconnect'])
         }
       }
     }
@@ -255,7 +256,7 @@ PopupButton {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: () => {
-              root.connectedWifi ? root.connectedWifi.disconnect() : 0;
+              root.connectedWifi ? root.connectedWifi.disconnect() : 0
             }
           }
         }
@@ -369,7 +370,7 @@ PopupButton {
                   anchors.fill: parent
                   cursorShape: Qt.PointingHandCursor
                   onClicked: () => {
-                    nw.modelData.connect();
+                    nw.modelData.connect()
                   }
                 }
               }
@@ -514,8 +515,8 @@ PopupButton {
               ClickArea {
                 id: countryArea
                 onClicked: {
-                  root.vpnLocation = country.modelData[0];
-                  Settings.persistent.vpnLocation = country.modelData[0];
+                  root.vpnLocation = country.modelData[0]
+                  Settings.persistent.vpnLocation = country.modelData[0]
                 }
               }
 

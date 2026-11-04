@@ -18,9 +18,10 @@ Singleton {
   readonly property string configDir: `${Quickshell.env("XDG_CONFIG_HOME")}/quickshell`
   readonly property var persistent: new Proxy(JSON.parse(persistentFile.text()), {
     set(target, prop, value) {
-      target[prop] = value;
-      persistentFile.setText(JSON.stringify(target, null, 2));
-      return true;
+      target[prop] = value
+      persistentFile.setText(JSON.stringify(target, null, 2))
+      return true
+
     }
   })
 

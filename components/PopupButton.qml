@@ -1,8 +1,8 @@
+import ".."
+import "../animations"
 import QtQuick
 import QtQuick.Window
 import Quickshell
-import ".."
-import "../animations"
 
 Rectangle {
   id: root
@@ -18,42 +18,36 @@ Rectangle {
   property bool hor: true // animate that dimension
   property int verAlign: 0 // which way to align (0: left, 1: center, 2: right)
   property int horAlign: 1 // which way to align (0: left, 1: center, 2: right)
-
   // internal - should never be changed from outside this file, but can be viewed
   property bool hovered: false
   property int topMargin: 10
   readonly property bool popupOpen: Popups.openPopup === root
   readonly property bool horizontalBar: Settings.statusBarSide === 'top' || Settings.statusBarSide === 'bottom'
   readonly property int popupEdge: ({
-      top: Edges.Bottom,
-      bottom: Edges.Top,
-      left: Edges.Right,
-      right: Edges.Left
+      "top": Edges.Bottom,
+      "bottom": Edges.Top,
+      "left": Edges.Right,
+      "right": Edges.Left
     })[Settings.statusBarSide]
-
   default property alias popupContent: contentRect.data
   property alias popupWindow: popupWindow
 
   function togglePopup() {
-    Popups.openPopup = (Popups.openPopup === root) ? null : root;
+    Popups.openPopup = (Popups.openPopup === root) ? null : root
   }
 
   onPopupOpenChanged: {
     if (!popupOpen)
-      closeTimer.restart();
+      closeTimer.restart()
   }
-
   radius: Theme.rounding
   color: (hovered || (Popups.openPopup === root)) ? Theme.withOpacity(accentColor, 0.4) : Theme.withOpacity(accentColor, 0.3)
   width: label.implicitWidth + 30
   height: 35
 
-  Behavior on color {
-    ColorAnim {}
-  }
-
   Label {
     id: label
+
     anchors.centerIn: parent
     text: root.text
     color: root.textColor
@@ -86,10 +80,18 @@ Rectangle {
 
     Timer {
       id: closeTimer
+
       interval: Theme.animDuration
     }
 
     Item {
+      // qmllint enable Quick.anchor-combinations
+
+      opacity: (root.popupOpen || closeTimer.running) ? 1 : 0
+      height: root.ver ? (root.popupOpen ? (root.popupHeight - root.topMargin) : 0) : root.popupHeight - root.topMargin
+      width: root.hor ? (root.popupOpen ? root.popupWidth : 0) : root.popupWidth
+      clip: true
+
       // qmllint disable Quick.anchor-combinations
       anchors {
         top: root.verAlign === 0 ? parent.top : undefined
@@ -99,14 +101,18 @@ Rectangle {
         right: root.horAlign === 2 ? parent.right : undefined
         bottom: root.verAlign === 2 ? parent.bottom : undefined
       }
-      // qmllint enable Quick.anchor-combinations
 
-      opacity: (root.popupOpen || closeTimer.running) ? 1 : 0
+      Rectangle {
+        id: contentRect
 
-      height: root.ver ? (root.popupOpen ? (root.popupHeight - root.topMargin) : 0) : root.popupHeight - root.topMargin
-      width: root.hor ? (root.popupOpen ? root.popupWidth : 0) : root.popupWidth
-
-      clip: true
+        anchors.horizontalCenter: parent.horizontalCenter
+        width: root.popupWidth
+        height: root.popupHeight - root.topMargin
+        radius: Theme.rounding
+        border.color: Theme.border
+        border.width: 1
+        color: Theme.withOpacity(root.popupColor, 0.4)
+      }
 
       Behavior on height {
         NumberAnim {}
@@ -119,17 +125,10 @@ Rectangle {
       Behavior on scale {
         NumberAnim {}
       }
-
-      Rectangle {
-        id: contentRect
-        anchors.horizontalCenter: parent.horizontalCenter
-        width: root.popupWidth
-        height: root.popupHeight - root.topMargin
-        radius: Theme.rounding
-        border.color: Theme.border
-        border.width: 1
-        color: Theme.withOpacity(root.popupColor, 0.4)
-      }
     }
+  }
+
+  Behavior on color {
+    ColorAnim {}
   }
 }
