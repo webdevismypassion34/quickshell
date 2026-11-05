@@ -42,6 +42,8 @@ Row {
       source: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : "")
       smooth: true
       mipmap: true
+      asynchronous: true
+      sourceSize: Qt.size(35, 35)
     }
 
     ClickArea {
@@ -93,6 +95,8 @@ Row {
               source: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : "")
               smooth: true
               mipmap: true
+              asynchronous: true
+              sourceSize: Qt.size(200, 200)
             }
           }
 

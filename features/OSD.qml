@@ -20,9 +20,9 @@ PanelWindow {
   implicitHeight: 60
   exclusionMode: ExclusionMode.Ignore
 
-  property var audio: Pipewire.defaultAudioSink.audio
-  property real volume: audio.volume
-  property bool muted: audio.muted
+  property var audio: Pipewire.defaultAudioSink?.audio
+  property real volume: audio?.volume ?? 0
+  property bool muted: audio?.muted ?? false
   property real startingVolume: 0
 
   property var osdActive: false
@@ -55,7 +55,7 @@ PanelWindow {
     running: false
     repeat: false
     onTriggered: {
-      panelWindow.startingVolume = Pipewire.defaultAudioSink.audio.volume
+      panelWindow.startingVolume = panelWindow.audio?.volume ?? 0
     }
   }
 

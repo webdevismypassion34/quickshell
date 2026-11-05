@@ -14,7 +14,7 @@ Item {
 
   required property string screen
 
-  readonly property var workspaces: Hyprland.workspaces.values.filter(v => isFinite(v.name)).filter(v => v.monitor.name === screen)
+  readonly property var workspaces: Hyprland.workspaces.values.filter(v => isFinite(v.name)).filter(v => v.monitor?.name === screen)
 
   Rectangle {
     id: active

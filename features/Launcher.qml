@@ -196,6 +196,8 @@ PanelWindow {
                   source: Quickshell.iconPath(entry.modelData.icon)
                   smooth: true
                   mipmap: true
+                  asynchronous: true
+                  sourceSize: Qt.size(30, 30)
                 }
               }
 
