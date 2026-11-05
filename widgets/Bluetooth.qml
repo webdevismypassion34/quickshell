@@ -130,7 +130,7 @@ PopupButton {
     }
 
     Label {
-      readonly property int battery: Math.round(root.connectedDevice?.battery * 100) ?? 0
+      readonly property int battery: Math.round((root.connectedDevice?.battery ?? 0) * 100)
       font.pixelSize: Theme.fontSize * 0.75
 
       text: root.connectedDevice?.batteryAvailable ? `${battery}% battery` : 'battery unavailable'

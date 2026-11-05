@@ -102,14 +102,18 @@ Singleton {
           Utils.exec(['xdg-user-dir', 'MUSIC'], musicDir => {
             if (root.lastTrack !== id)
               return
-            const file = `${musicDir.trim()}/${metadata['xesam:title']}.mp3`
 
-            Utils.exec({
-              command: ['sh', '-c', `mkdir -p "$(dirname '${artCachePath}')" && ffmpeg -y -i '${file.replace(/'/g, "'\\''")}' -an -c:v copy -update 1 '${artCachePath}'`]
-            }, () => {
-              if (root.lastTrack !== id)
+            Utils.exec(['sh', '-c', 'find "$1" -maxdepth 1 -type f -iname "$2.*" -print -quit', 'sh', musicDir.trim(), metadata['xesam:title']], file => {
+              if (root.lastTrack !== id || !file.trim())
                 return
-              root.localArt = artCachePath
+
+              Utils.exec({
+                command: ['sh', '-c', `mkdir -p "$(dirname '${artCachePath}')" && ffmpeg -y -i '${file.trim().replace(/'/g, "'\\''")}' -an -c:v copy -update 1 '${artCachePath}'`]
+              }, () => {
+                if (root.lastTrack !== id)
+                  return
+                root.localArt = artCachePath
+              })
             })
           })
         })
