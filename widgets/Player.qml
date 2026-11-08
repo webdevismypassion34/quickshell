@@ -37,12 +37,9 @@ Row {
     clip: true
     color: Theme.bg
 
-    Image {
+    CoverArt {
       anchors.fill: parent
-      source: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : "")
-      smooth: true
-      mipmap: true
-      asynchronous: true
+      artUrl: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : '')
       sourceSize: Qt.size(35, 35)
     }
 
@@ -90,12 +87,9 @@ Row {
             height: 200
             color: Theme.bg
 
-            Image {
+            CoverArt {
               anchors.fill: parent
-              source: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : "")
-              smooth: true
-              mipmap: true
-              asynchronous: true
+              artUrl: root.player?.trackArtUrl || (PlayerData.localArt ? `file://${PlayerData.localArt}` : '')
               sourceSize: Qt.size(200, 200)
             }
           }
