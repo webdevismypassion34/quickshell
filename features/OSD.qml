@@ -20,7 +20,7 @@ PanelWindow {
   implicitHeight: 60
   exclusionMode: ExclusionMode.Ignore
 
-  property var audio: Pipewire.defaultAudioSink?.audio
+  property var audio: Pipewire.defaultAudioSink?.audio ?? null
   property real volume: audio?.volume ?? 0
   property bool muted: audio?.muted ?? false
   property real startingVolume: 0

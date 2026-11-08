@@ -79,6 +79,7 @@ Rectangle {
       deselect()
       if (text.length)
         text = String(root.clamp(parseInt(text, 10) || 0))
+      root.accepted()
     }
 
     anchors {

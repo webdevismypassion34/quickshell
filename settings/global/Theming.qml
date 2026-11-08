@@ -7,6 +7,14 @@ import "../../components"
 import "../../theme"
 
 Column {
+  id: root
+
+  readonly property var simpleFields: [
+    { key: 'rounding', label: 'Rounding:', min: 0, max: 99 },
+    { key: 'power', label: 'Power:', min: 1, max: 5 },
+    { key: 'outsideMargin', label: 'Margin:', min: 0, max: 99 },
+  ]
+
   Item {
     width: parent.width
     height: applyBtn.height
@@ -36,9 +44,6 @@ Column {
         // qmllint enable eval
 
         Theme.accent = Theme.selectedTheme[accentSelect.displayText.toLowerCase()]
-        Theme.rounding = +(radiusInput.text)
-        Theme.power = +(powerInput.text)
-        Theme.outsideMargin = +(marginInput.text)
 
         Theme.changeGlobalTheme()
       }
@@ -48,10 +53,10 @@ Column {
   Column {
     spacing: 4
 
-    Row {
-      id: colorSchemes
+    SettingsRow {
+      id: schemeRow
 
-      spacing: 5
+      label: 'Color Scheme:'
 
       property var colorSchemes: []
 
@@ -63,33 +68,21 @@ Column {
         workingDirectory: Settings.configDir
 
         stdout: StdioCollector {
-          onStreamFinished: colorSchemes.colorSchemes = this.text.split('\n').filter(v => v.includes('.qml')).map(v => v.split('.')[0])
+          onStreamFinished: schemeRow.colorSchemes = this.text.split('\n').filter(v => v.includes('.qml')).map(v => v.split('.')[0])
         }
-      }
-
-      Label {
-        anchors.verticalCenter: parent.verticalCenter
-        text: 'Color Scheme:'
       }
 
       Select {
         id: schemeSelect
 
         width: 200
-        options: colorSchemes.colorSchemes.map(v => v.replace(/[a-z][A-Z]/, v => v[0] + ' ' + v[1]))
-        currentIndex: colorSchemes.colorSchemes.findIndex(v => v === Theme.selectedTheme.name)
+        options: schemeRow.colorSchemes.map(v => v.replace(/[a-z][A-Z]/, v => v[0] + ' ' + v[1]))
+        currentIndex: schemeRow.colorSchemes.findIndex(v => v === Theme.selectedTheme.name)
       }
     }
 
-    Row {
-      id: accents
-
-      spacing: 5
-
-      Label {
-        anchors.verticalCenter: parent.verticalCenter
-        text: 'Accent Color:'
-      }
+    SettingsRow {
+      label: 'Accent Color:'
 
       Select {
         id: accentSelect
@@ -100,60 +93,14 @@ Column {
       }
     }
 
-    Row {
-      id: radius
+    Repeater {
+      model: root.simpleFields
 
-      spacing: 5
+      SettingsField {
+        required property var modelData
 
-      Label {
-        anchors.verticalCenter: parent.verticalCenter
-        text: 'Rounding:'
-      }
-
-      NumberInput {
-        id: radiusInput
-        text: Theme.rounding
-        placeholder: '#'
-        max: 99
-        min: 0
-      }
-    }
-
-    Row {
-      id: power
-
-      spacing: 5
-
-      Label {
-        anchors.verticalCenter: parent.verticalCenter
-        text: 'Power:'
-      }
-
-      NumberInput {
-        id: powerInput
-        text: Theme.power
-        placeholder: '#'
-        max: 5
-        min: 1
-      }
-    }
-
-    Row {
-      id: margin
-
-      spacing: 5
-
-      Label {
-        anchors.verticalCenter: parent.verticalCenter
-        text: 'Margin:'
-      }
-
-      NumberInput {
-        id: marginInput
-        text: Theme.outsideMargin
-        placeholder: '#'
-        max: 99
-        min: 0
+        target: Theme
+        field: modelData
       }
     }
   }
