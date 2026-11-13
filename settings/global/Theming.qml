@@ -45,6 +45,8 @@ Column {
 
         Theme.accent = Theme.selectedTheme[accentSelect.displayText.toLowerCase()]
 
+        Array.from({ length: fieldsRepeater.count }, (_, i) => fieldsRepeater.itemAt(i)).forEach(item => item.commit())
+
         Theme.changeGlobalTheme()
       }
     }
@@ -94,6 +96,8 @@ Column {
     }
 
     Repeater {
+      id: fieldsRepeater
+
       model: root.simpleFields
 
       SettingsField {

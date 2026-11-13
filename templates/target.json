@@ -6,8 +6,13 @@
       "posthook": "kitty +kitten themes --reload-in=all Quickshell"
     },
     {
-      "template": "vesktop.css",
+      "template": "discord.css",
       "target": "%C/vesktop/themes/Quickshell.css",
+      "posthook": "true"
+    },
+    {
+      "template": "discord.css",
+      "target": "%C/equibop/themes/Quickshell.css",
       "posthook": "true"
     },
     {

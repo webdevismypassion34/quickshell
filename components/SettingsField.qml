@@ -10,11 +10,15 @@ SettingsRow {
 
   label: field.label
 
-  NumberInput {
-    text: root.target[root.field.key]
-    min: field.min ?? -Infinity
-    max: field.max ?? Infinity
+  function commit() {
+    root.target[root.field.key] = +numberInput.text
+  }
 
-    onAccepted: root.target[root.field.key] = +text
+  NumberInput {
+    id: numberInput
+
+    text: root.target[root.field.key]
+    min: root.field.min ?? -Infinity
+    max: root.field.max ?? Infinity
   }
 }

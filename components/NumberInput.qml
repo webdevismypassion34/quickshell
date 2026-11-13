@@ -22,6 +22,7 @@ Rectangle {
 
   function step(delta) {
     input.text = String(root.clamp((parseInt(input.text, 10) || 0) + delta))
+    root.accepted()
   }
 
   radius: Theme.rounding
