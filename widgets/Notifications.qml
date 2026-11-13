@@ -10,13 +10,14 @@ PopupButton {
   id: button
 
   readonly property int notifCount: NotificationData.notifications.length
+  required property int screenHeight
 
   accentColor: Theme.red
   popupColor: Theme.withOpacity(Theme.bg, 0.9)
 
   text: `${notifCount > 0 ? '󱅫' : '󰂚'} ${notifCount}`
 
-  popupHeight: 1030
+  popupHeight: screenHeight - Theme.barHeight - Theme.outsideMargin
   popupWidth: Theme.notificationWidth + Theme.notificationInnerMargin * 2
   horAlign: 2
 
