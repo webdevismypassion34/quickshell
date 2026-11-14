@@ -29,7 +29,7 @@ Singleton {
 
   property bool censorWifiNames: false
 
-  property string statusBarSide: 'top'
+  property string statusBarSide: persistent.statusBarSide ?? 'top'
 
   /*
 

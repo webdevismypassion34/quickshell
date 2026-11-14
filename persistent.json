@@ -3,5 +3,6 @@
   "currentAccent": "purple",
   "vpnLocation": "Tokyo",
   "rounding": 5,
-  "outsideMargin": 4
+  "outsideMargin": 4,
+  "statusBarSide": "top"
 }

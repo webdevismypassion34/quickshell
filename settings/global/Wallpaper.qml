@@ -49,17 +49,8 @@ Column {
   Column {
     spacing: 4
 
-    Row {
-      id: backend
-
-      spacing: 5
-
-      property var colorSchemes: []
-
-      Label {
-        anchors.verticalCenter: parent.verticalCenter
-        text: 'Wallpaper Backend:'
-      }
+    SettingsRow {
+      label: 'Wallpaper Backend:'
 
       Select {
         id: schemeSelect

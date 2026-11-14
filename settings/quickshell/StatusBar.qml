@@ -26,13 +26,8 @@ Column {
   Column {
     spacing: 4
 
-    Row {
-      spacing: 5
-
-      Label {
-        text: 'Side:'
-        anchors.verticalCenter: parent.verticalCenter
-      }
+    SettingsRow {
+      label: 'Side:'
 
       Select {
         id: sideSelect
@@ -40,10 +35,28 @@ Column {
         width: 100
 
         options: ['top', 'left', 'bottom', 'right']
+        currentIndex: options.indexOf(Settings.statusBarSide)
 
         onCurrentTextChanged: {
           Settings.statusBarSide = currentText
+          Settings.persistent.statusBarSide = currentText
         }
+      }
+    }
+  }
+
+  SettingsRow {
+    label: 'Bar Height:'
+
+    Slider {
+      width: 100
+      min: 20
+      max: 60
+      value: Theme.barHeight
+      anchors.verticalCenter: parent.verticalCenter
+
+      onMoved: {
+        Theme.barHeight = value
       }
     }
   }

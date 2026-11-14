@@ -90,10 +90,6 @@ Scope {
         Notifications {
           screenHeight: bar.modelData.height
         }
-
-        // Component.onCompleted: {
-        //   console.log(Object.keys(bar.modelData).filter(v=>!v.includes('Changed')))
-        // }
       }
     }
   }

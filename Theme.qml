@@ -57,7 +57,7 @@ Singleton {
 
   // animations
   readonly property int animDuration: 300
-  readonly property int easingType: Easing.InOutCubic
+  readonly property int easingType: Easing.OutQuint
 
   // functions
   function withOpacity(color, alpha) {
