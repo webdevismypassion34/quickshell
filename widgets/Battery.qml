@@ -33,6 +33,7 @@ PopupButton {
 
   text: `${getIcon(battery)} ${battery}%`
   accentColor: Theme.green
+  popupHeight: 170
   popupWidth: 330
 
   Label {
@@ -62,7 +63,6 @@ PopupButton {
       width: 100
       height: width
 
-      // background track (full circle)
       Shape {
         anchors.fill: parent
         antialiasing: true
@@ -84,7 +84,6 @@ PopupButton {
         }
       }
 
-      // progress arc
       Shape {
         anchors.fill: parent
         antialiasing: true
@@ -118,6 +117,7 @@ PopupButton {
     }
 
     Column {
+      anchors.verticalCenter: parent.verticalCenter
       Label {
         text: `Status: ${UPowerDeviceState.toString(root.device.state)}`
       }

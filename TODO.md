@@ -3,7 +3,6 @@
 - clock, vol popup
   - clock: dashboard
   - vol: sliders, app(s) using mic
-- finish battery popup
 - finish rest of settings, including:
   - status bar: drag and drop, right click an item for its settings
   - notifications: app-specific rules
@@ -12,3 +11,16 @@
 - make templates for vsc, gtk, spicetify
 - add border style, similar to celestia
 - overlay for discord (calls and messages)
+- more for search menu thing
+  - on top of searching for apps, run commands (and search) by doing `>` first (?)
+  - add customizable list of prefixes --> command map (e.g. `@` > `librewolf "%S"`)
+  - add process force quit? and ram usage? idk
+- dnd toggle in notifications
+- clip and emojis
+- weather widget
+- speed test, ping, wired connection viewer in wifi popup
+- more quickshell apps on top of settings app - process viewer (kinda like force quit mac, whatever ram thingy on winslop)
+- screenshots
+  - freeze screen
+  - qs screenshot editor
+  - add tags - apps visible, whether its full or partial
