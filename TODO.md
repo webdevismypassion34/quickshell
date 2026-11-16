@@ -2,7 +2,7 @@
 
 - clock, vol popup
   - clock: dashboard
-  - vol: sliders, app(s) using mic
+  - vol: sliders, eq, app(s) using mic
 - finish rest of settings, including:
   - status bar: drag and drop, right click an item for its settings
   - notifications: app-specific rules
@@ -18,7 +18,6 @@
 - dnd toggle in notifications
 - clip and emojis
 - weather widget
-- speed test, ping, wired connection viewer in wifi popup
 - more quickshell apps on top of settings app - process viewer (kinda like force quit mac, whatever ram thingy on winslop)
 - screenshots
   - freeze screen

@@ -15,7 +15,10 @@ Singleton {
     blockLoading: true
   }
 
-  readonly property string configDir: `${Quickshell.env("XDG_CONFIG_HOME")}/quickshell`
+  readonly property string home: Quickshell.env("XDG_CONFIG_HOME")
+  readonly property string cache: Quickshell.env("XDG_CACHE_HOME")
+
+  readonly property string configDir: `${home}/quickshell`
   readonly property var persistent: new Proxy(JSON.parse(persistentFile.text()), {
     set(target, prop, value) {
       target[prop] = value
@@ -25,7 +28,7 @@ Singleton {
     }
   })
 
-  readonly property string wallpaperDir: `${Quickshell.env("HOME")}/wallpaper`
+  property string wallpaperDir: persistent.wallpaperDir ?? `${Quickshell.env("HOME")}/wallpaper`
 
   property bool censorWifiNames: false
 

@@ -4,5 +4,6 @@
   "vpnLocation": "Tokyo",
   "rounding": 5,
   "outsideMargin": 4,
-  "statusBarSide": "top"
+  "statusBarSide": "top",
+  "wallpaperDir": "/home/alexmn/Pictures/Wallpapers"
 }

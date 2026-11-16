@@ -10,6 +10,8 @@ Rectangle {
   property bool hovered: false
   property color hoverColor: accentColor
   property bool active: true
+  border.width: 0
+  border.color: Theme.border
 
   signal clicked
 

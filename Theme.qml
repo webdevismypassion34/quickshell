@@ -112,7 +112,7 @@ Singleton {
 
           return value
         })
-        const targetFile = target.replace('%C', Quickshell.env("XDG_CONFIG_HOME"))
+        const targetFile = target.replace('%C', Settings.home)
 
         Utils.exec({
           command: ['sh', '-c', `mkdir -p "$(dirname '${targetFile}')" && printf '%s' '${content.replace(/'/g, "'\\''")}' > ${targetFile} && ${posthook}`]

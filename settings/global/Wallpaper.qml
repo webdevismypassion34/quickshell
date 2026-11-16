@@ -53,11 +53,24 @@ Column {
       label: 'Wallpaper Backend:'
 
       Select {
-        id: schemeSelect
+        id: backendSelect
 
         width: 120
         options: ['awww', 'hyprpaper'] // @TODO add more options, wire up hyprpaper
         currentIndex: 0
+      }
+    }
+
+    SettingsRow {
+      label: 'Wallpaper Dir:'
+
+      DirSelect {
+        value: Settings.wallpaperDir
+
+        onAccepted: path => {
+          Settings.wallpaperDir = path
+          Settings.persistent.wallpaperDir = path
+        }
       }
     }
 

@@ -11,13 +11,13 @@ SettingsRow {
   label: field.label
 
   function commit() {
-    root.target[root.field.key] = +numberInput.text
+    root.target[root.field.key] = numberInput.value
   }
 
-  NumberInput {
+  Slider {
     id: numberInput
 
-    text: root.target[root.field.key]
+    value: root.target[root.field.key]
     min: root.field.min ?? -Infinity
     max: root.field.max ?? Infinity
   }

@@ -10,9 +10,9 @@ Column {
   id: root
 
   readonly property var simpleFields: [
-    { key: 'rounding', label: 'Rounding:', min: 0, max: 99 },
+    { key: 'rounding', label: 'Rounding:', min: 0, max: 15 },
     { key: 'power', label: 'Power:', min: 1, max: 5 },
-    { key: 'outsideMargin', label: 'Margin:', min: 0, max: 99 },
+    { key: 'outsideMargin', label: 'Margin:', min: 0, max: 10 },
   ]
 
   Item {
