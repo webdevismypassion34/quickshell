@@ -13,7 +13,7 @@ import "../animations"
 PanelWindow {
   id: panelWindow
   WlrLayershell.namespace: "quickshell-launcher"
-  WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+  WlrLayershell.keyboardFocus: WlrKeyboardFocus.None
   visible: osdActive || closeAnimationTimer.running
   color: Theme.transparent
   implicitWidth: 200
