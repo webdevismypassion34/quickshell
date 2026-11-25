@@ -47,6 +47,12 @@ Column {
 
         Array.from({ length: fieldsRepeater.count }, (_, i) => fieldsRepeater.itemAt(i)).forEach(item => item.commit())
 
+        Settings.animationsEnabled = animationsToggle.checked
+        Settings.persistent.animationsEnabled = Settings.animationsEnabled
+
+        animDurationField.commit()
+        Settings.persistent.animDuration = Settings.animDuration
+
         Theme.changeGlobalTheme()
       }
     }
@@ -106,6 +112,24 @@ Column {
         target: Theme
         field: modelData
       }
+    }
+
+    SettingsRow {
+      label: 'Animations:'
+
+      Toggle {
+        id: animationsToggle
+
+        anchors.verticalCenter: parent.verticalCenter
+        checked: Settings.animationsEnabled
+      }
+    }
+
+    SettingsField {
+      id: animDurationField
+
+      target: Settings
+      field: ({ key: 'animDuration', label: 'Anim Duration:', min: 0, max: 1000 })
     }
   }
 }

@@ -56,7 +56,7 @@ Singleton {
   readonly property int fontSize: 14
 
   // animations
-  readonly property int animDuration: 300
+  readonly property int animDuration: Settings.animationsEnabled ? Settings.animDuration : 0
   readonly property int easingType: Easing.OutQuint
 
   // functions
@@ -79,45 +79,51 @@ Singleton {
     blockLoading: true
   }
 
+  function applyTarget(t) {
+    const {
+      template,
+      target,
+      posthook
+    } = t
+
+    Utils.exec({
+      command: ['cat', template],
+      workingDirectory: Settings.configDir + '/templates'
+    }, stdout => {
+      const content = stdout.replace(/\$\{([\w:]+)\}|\$(\w+)/g, (match, braced, bare) => {
+        let name = braced ?? bare
+        let flags = []
+        if (name.includes(':'))
+          [name, ...flags] = name.split(':')
+
+        let value = root[name] ?? selectedTheme[name] ?? Settings[name] ?? null
+        if (value === null)
+          return match
+
+        if (flags.includes('nohash'))
+          value = String(value).replace('#', '')
+
+        return value
+      })
+      const targetFile = target.replace('%C', Settings.home)
+
+      Utils.exec({
+        command: ['sh', '-c', `mkdir -p "$(dirname '${targetFile}')" && printf '%s' '${content.replace(/'/g, "'\\''")}' > ${targetFile} && ${posthook}`]
+      })
+    })
+  }
+
+  // regenerate only the target(s) built from one template, e.g. 'hyprland.lua' - leaves everything else (kitty, discord, librewolf...) untouched
+  function applyTemplate(templateName) {
+    JSON.parse(targetsFile.text()).targets.filter(t => t.template === templateName).forEach(root.applyTarget)
+  }
+
   function changeGlobalTheme(theme) {
     Settings.persistent.currentTheme = selectedTheme.name
     Settings.persistent.currentAccent = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple',].find(v => selectedTheme[v] === Theme.accent)
     Settings.persistent.rounding = root.rounding
     Settings.persistent.outsideMargin = root.outsideMargin
 
-    const targets = JSON.parse(targetsFile.text())
-    targets.targets.forEach(t => {
-      const {
-        template,
-        target,
-        posthook
-      } = t
-
-      Utils.exec({
-        command: ['cat', template],
-        workingDirectory: Settings.configDir + '/templates'
-      }, stdout => {
-        const content = stdout.replace(/\$\{([\w:]+)\}|\$(\w+)/g, (match, braced, bare) => {
-          let name = braced ?? bare
-          let flags = []
-          if (name.includes(':'))
-            [name, ...flags] = name.split(':')
-
-          let value = root[name] ?? selectedTheme[name] ?? null
-          if (value === null)
-            return match
-
-          if (flags.includes('nohash'))
-            value = String(value).replace('#', '')
-
-          return value
-        })
-        const targetFile = target.replace('%C', Settings.home)
-
-        Utils.exec({
-          command: ['sh', '-c', `mkdir -p "$(dirname '${targetFile}')" && printf '%s' '${content.replace(/'/g, "'\\''")}' > ${targetFile} && ${posthook}`]
-        })
-      })
-    })
+    JSON.parse(targetsFile.text()).targets.forEach(root.applyTarget)
   }
 }

@@ -5,5 +5,11 @@
   "rounding": 5,
   "outsideMargin": 4,
   "statusBarSide": "top",
-  "wallpaperDir": "/home/alexmn/Pictures/Wallpapers"
+  "wallpaperDir": "/home/alexmn/Pictures/Wallpapers",
+  "accelProfile": "flat",
+  "naturalScroll": true,
+  "keyboardMethod": "keyboard-us",
+  "tapToClick": true,
+  "sensitivity": 0,
+  "animationsEnabled": false
 }

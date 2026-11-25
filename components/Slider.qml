@@ -22,7 +22,7 @@ Row {
       pixelSize: Theme.fontSize
     }
 
-    text: root.max
+    text: root.min + root.step
   }
 
   Label {
@@ -69,10 +69,11 @@ Row {
       preventStealing: true
 
       function update(x) {
+        const places = Number.isInteger(root.step) ? 0 : root.step.toString().split('.')[1].length
         const r = Math.max(0, Math.min(1, x / slider.width))
         let v = root.min + r * (root.max - root.min)
         if (root.step > 0)
-          v = root.min + Math.round((v - root.min) / root.step) * root.step
+          v = +(root.min + Math.round((v - root.min) / root.step) * root.step).toFixed(places)
         let oldValue = root.value
         root.value = Math.min(root.max, v)
         if (oldValue !== root.value)

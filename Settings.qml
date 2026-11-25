@@ -34,6 +34,15 @@ Singleton {
 
   property string statusBarSide: persistent.statusBarSide ?? 'top'
 
+  property string accelProfile: persistent.accelProfile ?? 'flat'
+  property real sensitivity: persistent.sensitivity ?? 0
+  property bool naturalScroll: persistent.naturalScroll ?? true
+  property bool tapToClick: persistent.tapToClick ?? true
+  property string keyboardMethod: persistent.keyboardMethod ?? 'keyboard-us'
+
+  property bool animationsEnabled: persistent.animationsEnabled ?? true
+  property int animDuration: persistent.animDuration ?? 300
+
   /*
 
   archNodes<{
