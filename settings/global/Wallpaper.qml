@@ -50,7 +50,7 @@ Column {
     spacing: 4
 
     SettingsRow {
-      label: 'Wallpaper Backend:'
+      label: 'Backend:'
 
       Select {
         id: backendSelect

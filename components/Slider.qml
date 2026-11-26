@@ -22,7 +22,10 @@ Row {
       pixelSize: Theme.fontSize
     }
 
-    text: root.min + root.step
+    readonly property string min: (root.min + root.step).toString()
+    readonly property string max: (root.max - root.step).toString()
+
+    text: min.length > max.length ? min : max
   }
 
   Label {
